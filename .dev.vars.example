@@ -1,0 +1,8 @@
+# Runtime secrets - required for local Cloudflare Workers development.
+# Copy this file to `.dev.vars` and fill in local or test values.
+RESEND_API_KEY=""
+RESEND_FROM_EMAIL=""
+RESEND_FROM_NAME="Cadena Labs"
+CONTACT_EMAIL=""
+TURNSTILE_SITE_KEY=""
+TURNSTILE_SECRET_KEY=""

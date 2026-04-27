@@ -1,0 +1,36 @@
+version: 2
+updates:
+  # Application dependencies (pnpm-lock.yaml lives under the npm ecosystem).
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "08:00"
+      timezone: "America/Toronto"
+    open-pull-requests-limit: 5
+    versioning-strategy: "increase"
+    groups:
+      dev-dependencies:
+        dependency-type: "development"
+        update-types:
+          - "minor"
+          - "patch"
+      production-patches:
+        dependency-type: "production"
+        update-types:
+          - "patch"
+
+  # Pinned GitHub Actions (kept fresh by SHA via Dependabot).
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "08:00"
+      timezone: "America/Toronto"
+    open-pull-requests-limit: 5
+    groups:
+      github-actions:
+        patterns:
+          - "*"

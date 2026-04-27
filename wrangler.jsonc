@@ -1,0 +1,44 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "cadenalabs-io",
+  "main": "./server/app.ts",
+  "compatibility_date": "2026-04-27",
+  "compatibility_flags": ["nodejs_compat"],
+  "assets": {
+    "directory": "./dist/client",
+    "binding": "ASSETS",
+    "html_handling": "none",
+    "not_found_handling": "none",
+  },
+  "routes": [{ "pattern": "cadenalabs.io", "custom_domain": true }],
+  "secrets": {
+    "required": [
+      "RESEND_API_KEY",
+      "RESEND_FROM_EMAIL",
+      "RESEND_FROM_NAME",
+      "CONTACT_EMAIL",
+      "TURNSTILE_SITE_KEY",
+      "TURNSTILE_SECRET_KEY",
+    ],
+  },
+  // Paid plan uses the Standard usage model, which supports per-invocation CPU limits.
+  // This keeps a website render from turning into an accidental runaway bill.
+  "limits": {
+    "cpu_ms": 10000,
+  },
+  "observability": {
+    "enabled": true,
+    "logs": {
+      "enabled": true,
+      "invocation_logs": false,
+      "persist": false,
+      // Sampled request logs for a public marketing site (raise if debugging incidents).
+      "head_sampling_rate": 0.05,
+    },
+    "traces": {
+      "enabled": false,
+      "persist": false,
+      "head_sampling_rate": 0,
+    },
+  },
+}

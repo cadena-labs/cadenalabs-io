@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Business inquiries and prospective clients
+    url: https://cadenalabs.io/contact
+    about: Use the contact form on cadenalabs.io for project inquiries, quotes, and consulting requests. GitHub issues are for bugs on the live site only — not client sales.
+  - name: Security vulnerability
+    url: https://github.com/cadena-labs/cadenalabs-io/security/advisories/new
+    about: Report a security vulnerability privately via GitHub. Do not open a public issue with vulnerability details.

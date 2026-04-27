@@ -1,0 +1,30 @@
+{
+  "$schema": "https://turbo.build/schema.json",
+  "tasks": {
+    "build": {
+      "dependsOn": ["typecheck"],
+      "outputs": ["dist/**", ".react-router/**", ".wrangler/vite/**"]
+    },
+    "format:check": {
+      "outputs": []
+    },
+    "lint": {
+      "outputs": []
+    },
+    "typecheck": {
+      "cache": false,
+      "outputs": []
+    },
+    "test": {
+      "outputs": []
+    },
+    "dev": {
+      "cache": false,
+      "persistent": true
+    },
+    "preview": {
+      "cache": false,
+      "persistent": true
+    }
+  }
+}
