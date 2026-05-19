@@ -75,7 +75,7 @@
     "satori": "^0.26.0",
     "tailwindcss": "^4.2.4",
     "turbo": "2.9.14",
-    "typescript": "5.9.3",
+    "typescript": "6.0.3",
     "typescript-eslint": "^8.59.2",
     "vite": "8.0.10",
     "wrangler": "4.85.0"
