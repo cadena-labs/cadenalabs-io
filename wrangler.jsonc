@@ -33,15 +33,15 @@
       "invocation_logs": false,
       // Persist so logs appear in the Cloudflare dashboard (billed separately on Paid).
       "persist": true,
-      // Sampled request logs for a public marketing site (raise if debugging incidents).
-      "head_sampling_rate": 0.05,
+      // Launch sampling for low traffic; lower if volume or cost grows.
+      "head_sampling_rate": 0.25,
     },
     "traces": {
       "enabled": true,
       // Persist so traces appear in the Cloudflare dashboard (billed separately on Paid).
       "persist": true,
-      // Match log sampling for a public marketing site (raise when debugging performance).
-      "head_sampling_rate": 0.05,
+      // Launch sampling for low traffic; lower if volume or cost grows.
+      "head_sampling_rate": 0.25,
     },
   },
 }
