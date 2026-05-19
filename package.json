@@ -7,6 +7,11 @@
   "engines": {
     "node": "^20.19.0 || >=22.12.0"
   },
+  "pnpm": {
+    "overrides": {
+      "ws@>=8.0.0 <8.20.1": ">=8.20.1"
+    }
+  },
   "scripts": {
     "build": "node ./scripts/cloudflare-vite.mjs react-router build",
     "build:with-required-secrets": "pnpm run assert:runtime-secrets && pnpm run build",
