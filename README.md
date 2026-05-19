@@ -91,8 +91,8 @@ does not commit or read plaintext env files.
 This project is configured for the Workers Paid plan / Standard usage model:
 
 - Workers Static Assets serve `dist/client` through the `ASSETS` binding.
-- Observability logs stay on with low head sampling; invocation logs and persist
-  are off to keep volume down as traffic grows.
+- Observability logs stay on with low head sampling and dashboard persistence;
+  invocation logs stay off to keep volume down as traffic grows.
 - Workers traces are disabled for this marketing site (enable selectively when
   debugging performance).
 - The Worker wrapper logs structured JSON only for unhandled request errors.
@@ -155,7 +155,7 @@ Worker runtime secrets only; they are not checked into the repository.
 Cloudflare Workers Builds should run from the repository root with these
 settings:
 
-- Build command: `pnpm run cloudflare:build`
+- Build command: `pnpm run cloudflare:build` (branch-aware; see below)
 - Deploy command: `pnpm run cloudflare:deploy`
 - Non-production branch deploy command: `pnpm run cloudflare:preview`
 - Node version: `.node-version` selects Node `24` LTS
@@ -163,30 +163,48 @@ settings:
 After deploy, verify the contact form, Turnstile on your production hostname,
 and that `www` redirects to your apex domain if you use both.
 
+### Production vs preview builds
+
+Workers Builds uses one **build command** for every branch. `pnpm run
+cloudflare:build` reads `WORKERS_CI_BRANCH` and chooses the path:
+
+| Branch              | Build                                                      | Deploy (non-prod command)     |
+| ------------------- | ---------------------------------------------------------- | ----------------------------- |
+| `main` (production) | 1Password via `op run`, then `build:with-required-secrets` | `pnpm run cloudflare:deploy`  |
+| Any other branch    | CI placeholder secrets only (no 1Password)                 | `pnpm run cloudflare:preview` |
+
+Preview builds must not receive `OP_SERVICE_ACCOUNT_TOKEN` or
+`OP_ENVIRONMENT_ID`. The preview deploy command uploads a Worker version **without**
+`--secrets-file`; contact and Turnstile on preview URLs are not production-safe.
+
+For a trusted preview with real secrets (local or manual only), use `pnpm run
+cloudflare:preview:trusted` after `pnpm run cloudflare:build` on a branch you
+control.
+
+### 1Password on production
+
 Workers Builds exposes build variables and secrets only during the build; those
-values are not runtime bindings. This repo therefore uses the 1Password
+values are not runtime bindings. Production therefore uses the 1Password
 Environment twice:
 
-1. `cloudflare:build` runs the React Router / Cloudflare Vite build inside
-   `op run`, validates the required runtime secret allowlist is present, and
-   then builds the bundle with those values available.
+1. `cloudflare:build` on `main` runs the React Router / Cloudflare Vite build
+   inside `op run`, validates the required runtime secret allowlist is present,
+   and then builds the bundle with those values available.
 2. `cloudflare:deploy` runs Wrangler inside `op run`, writes the explicit
    runtime secret allowlist to a temporary `0600` JSON file, passes that file to
    `wrangler deploy --secrets-file`, and deletes the file immediately after
    Wrangler exits.
 
-For preview builds, `cloudflare:preview` uses the same runtime secret injection
-with `wrangler versions upload --secrets-file`.
-
-In Cloudflare, configure only these build-time secrets/variables:
+In Cloudflare **build** settings, configure only these build-time secrets for
+production (`main`):
 
 - `OP_SERVICE_ACCOUNT_TOKEN` - scoped read-only access to the 1Password
   Environment
 - `OP_ENVIRONMENT_ID` - the Environment ID to load
 
 `OP_ENVIRONMENT_ID` must be set before `op run` starts. The Cloudflare pnpm
-scripts fail fast if it is missing so builds cannot accidentally proceed
-without 1Password Environment injection. The 1Password Environment must
+scripts fail fast if it is missing so production builds cannot accidentally
+proceed without 1Password Environment injection. The 1Password Environment must
 include the same runtime secret allowlist listed under **Secrets** above.
 
 The Cloudflare-generated Workers Builds API token is enough for the deploy
