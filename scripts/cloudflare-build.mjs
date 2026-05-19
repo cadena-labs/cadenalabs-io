@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+/** Branch-aware Workers Builds entrypoint for production vs preview builds. */
 
 import { spawnSync } from "node:child_process";
 import path from "node:path";
@@ -9,11 +10,10 @@ import { resolveCloudflareBuildMode } from "./cloudflare-build-route.ts";
 const scriptDir = path.dirname(fileURLToPath(import.meta.url));
 const projectRoot = path.resolve(scriptDir, "..");
 
-function run(command, args, { shell = false } = {}) {
+function run(command, args) {
   const result = spawnSync(command, args, {
     cwd: projectRoot,
     env: process.env,
-    shell,
     stdio: "inherit",
   });
 
@@ -38,7 +38,7 @@ if (mode === "production") {
   ]);
 } else {
   console.log(
-    `cloudflare-build: preview branch (${process.env.WORKERS_CI_BRANCH}); using CI placeholder secrets (no 1Password).`,
+    `cloudflare-build: preview branch (${process.env.WORKERS_CI_BRANCH ?? "unknown"}); using CI placeholder secrets (no 1Password).`,
   );
   run(process.execPath, [
     "./scripts/with-ci-build-secrets.mjs",

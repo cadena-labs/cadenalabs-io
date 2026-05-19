@@ -1,4 +1,9 @@
-/** Placeholder runtime secrets for CI and untrusted Workers preview builds. */
+/**
+ * Placeholder values for build-time secret assertions in CI and untrusted
+ * Workers preview branches. `cloudflare:preview` does not upload these to the
+ * Worker; production runtime bindings are unchanged. Do not expect the contact
+ * form to work on preview URLs.
+ */
 export const ciRuntimeSecretEnv = {
   CONTACT_EMAIL: "ci@example.com",
   RESEND_API_KEY: "ci",

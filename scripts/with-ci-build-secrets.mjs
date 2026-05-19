@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+/** Runs a command with CI placeholder secrets and without 1Password credentials. */
 
 import { spawnSync } from "node:child_process";
 import path from "node:path";
@@ -23,7 +24,7 @@ if (userArgs.length === 0) {
 const env = { ...process.env, ...ciRuntimeSecretEnv };
 
 for (const name of opCredentialNames) {
-  if (env[name]) {
+  if (name in env) {
     console.warn(
       `with-ci-build-secrets: unsetting ${name} (preview builds must not use 1Password).`,
     );
