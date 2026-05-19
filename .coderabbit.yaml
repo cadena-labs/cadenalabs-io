@@ -1,0 +1,5 @@
+# https://docs.coderabbit.ai/configuration/auto-review
+reviews:
+  auto_review:
+    ignore_usernames:
+      - "dependabot[bot]"
