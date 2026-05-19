@@ -91,10 +91,8 @@ does not commit or read plaintext env files.
 This project is configured for the Workers Paid plan / Standard usage model:
 
 - Workers Static Assets serve `dist/client` through the `ASSETS` binding.
-- Observability logs stay on with low head sampling and dashboard persistence;
-  invocation logs stay off to keep volume down as traffic grows.
-- Workers traces are disabled for this marketing site (enable selectively when
-  debugging performance).
+- Observability logs and traces stay on with low head sampling (5%) and dashboard
+  persistence; invocation logs stay off to keep volume down as traffic grows.
 - The Worker wrapper logs structured JSON only for unhandled request errors.
 - A `10_000ms` CPU limit is set to cap accidental runaway SSR work.
 

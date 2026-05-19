@@ -37,9 +37,11 @@
       "head_sampling_rate": 0.05,
     },
     "traces": {
-      "enabled": false,
-      "persist": false,
-      "head_sampling_rate": 0,
+      "enabled": true,
+      // Persist so traces appear in the Cloudflare dashboard (billed separately on Paid).
+      "persist": true,
+      // Match log sampling for a public marketing site (raise when debugging performance).
+      "head_sampling_rate": 0.05,
     },
   },
 }
