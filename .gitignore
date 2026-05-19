@@ -22,3 +22,7 @@ coverage/
 
 # Internal Cadena Labs runbook (not published).
 docs/cloudflare-launch.md
+
+# Local Cursor / agent context (personal, not published).
+.cursor/
+AGENTS.md
