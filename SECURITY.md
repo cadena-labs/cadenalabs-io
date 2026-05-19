@@ -26,3 +26,15 @@ the impact, and coordinate any fix and disclosure timing with the reporter.
 Never include live credentials, API keys, tokens, private keys, `.env` files, or
 Cloudflare/1Password secret values in issues, pull requests, commits, screenshots,
 or pasted logs.
+
+## Workers Builds and pull requests
+
+Production deploys on `main` use 1Password (`OP_SERVICE_ACCOUNT_TOKEN`,
+`OP_ENVIRONMENT_ID`) during build and deploy. Non-production Workers Builds use
+CI placeholder secrets only and must not have 1Password credentials configured
+in the dashboard.
+
+Do not change preview build or deploy commands to load 1Password or upload runtime
+secrets unless you fully trust the branch. For maintainer-only previews with real
+secrets, use `pnpm run cloudflare:preview:trusted` locally, not untrusted PR
+automation.

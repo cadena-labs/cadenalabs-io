@@ -31,7 +31,8 @@
     "logs": {
       "enabled": true,
       "invocation_logs": false,
-      "persist": false,
+      // Persist so logs appear in the Cloudflare dashboard (billed separately on Paid).
+      "persist": true,
       // Sampled request logs for a public marketing site (raise if debugging incidents).
       "head_sampling_rate": 0.05,
     },
