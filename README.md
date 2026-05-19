@@ -168,10 +168,10 @@ and that `www` redirects to your apex domain if you use both.
 Workers Builds uses one **build command** for every branch. `pnpm run
 cloudflare:build` reads `WORKERS_CI_BRANCH` and chooses the path:
 
-| Branch | Build | Deploy (non-prod command) |
-| --- | --- | --- |
-| `main` (production) | 1Password via `op run`, then `build:with-required-secrets` | `pnpm run cloudflare:deploy` |
-| Any other branch | CI placeholder secrets only (no 1Password) | `pnpm run cloudflare:preview` |
+| Branch              | Build                                                      | Deploy (non-prod command)     |
+| ------------------- | ---------------------------------------------------------- | ----------------------------- |
+| `main` (production) | 1Password via `op run`, then `build:with-required-secrets` | `pnpm run cloudflare:deploy`  |
+| Any other branch    | CI placeholder secrets only (no 1Password)                 | `pnpm run cloudflare:preview` |
 
 Preview builds must not receive `OP_SERVICE_ACCOUNT_TOKEN` or
 `OP_ENVIRONMENT_ID`. The preview deploy command uploads a Worker version **without**

@@ -17,7 +17,7 @@
     "build:with-required-secrets": "pnpm run assert:runtime-secrets && pnpm run build",
     "assert:runtime-secrets": "node ./scripts/assert-runtime-secrets.mjs",
     "check": "turbo run format:check lint typecheck test build && pnpm audit --prod",
-    "cloudflare:build": "node ./scripts/cloudflare-build.mjs",
+    "cloudflare:build": "node --experimental-strip-types ./scripts/cloudflare-build.mjs",
     "cloudflare:deploy": "./scripts/install-op.sh && ./scripts/with-op-environment.sh pnpm run deploy:with-secrets",
     "cloudflare:preview": "node ./scripts/with-ci-build-secrets.mjs pnpm run versions:upload",
     "cloudflare:preview:trusted": "./scripts/install-op.sh && ./scripts/with-op-environment.sh pnpm run versions:upload:with-secrets",

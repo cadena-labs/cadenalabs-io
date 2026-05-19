@@ -4,7 +4,7 @@ import { spawnSync } from "node:child_process";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
-import { resolveCloudflareBuildMode } from "./cloudflare-build-route.mjs";
+import { resolveCloudflareBuildMode } from "./cloudflare-build-route.ts";
 
 const scriptDir = path.dirname(fileURLToPath(import.meta.url));
 const projectRoot = path.resolve(scriptDir, "..");

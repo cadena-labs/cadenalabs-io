@@ -20,16 +20,16 @@ if (userArgs.length === 0) {
   process.exit(1);
 }
 
+const env = { ...process.env, ...ciRuntimeSecretEnv };
+
 for (const name of opCredentialNames) {
-  if (process.env[name]) {
-    console.error(
-      `with-ci-build-secrets: refusing to run with ${name} set. Preview builds must not use 1Password credentials.`,
+  if (env[name]) {
+    console.warn(
+      `with-ci-build-secrets: unsetting ${name} (preview builds must not use 1Password).`,
     );
-    process.exit(1);
+    delete env[name];
   }
 }
-
-const env = { ...process.env, ...ciRuntimeSecretEnv };
 const [command, ...args] = userArgs;
 const result = spawnSync(command, args, {
   cwd: projectRoot,
