@@ -2,7 +2,6 @@ import {
   ArrowRight,
   CheckCircle2,
   Code,
-  Heart,
   Network,
   Server,
   Shield,
@@ -196,40 +195,30 @@ export default function Home() {
           </div>
         </section>
 
-        <section className="container-page pb-16 md:pb-20">
-          <Link
-            to="/community"
-            className="group relative flex flex-col gap-6 border border-border/70 bg-card/35 p-8 transition-colors hover:bg-card/50 focus-visible:outline-none focus-visible:ring-3 focus-visible:ring-ring/50 md:flex-row md:items-center md:justify-between md:p-10"
-          >
-            <span
-              aria-hidden="true"
-              className="gradient-ring opacity-0 group-hover:opacity-100 group-focus-visible:opacity-100"
-            />
-            <div className="flex flex-col gap-4 md:max-w-2xl">
-              <p className="font-mono text-[0.7rem] font-semibold uppercase tracking-[0.22em] text-muted-foreground">
-                Community
-              </p>
-              <h2 className="text-balance font-display text-3xl sm:text-4xl">
-                Pro-bono IT for local non-profits
-              </h2>
-              <p className="text-sm text-muted-foreground sm:text-base">
+        <section className="container-page py-16 md:py-20">
+          <div className="grid gap-8 border-t border-border/70 pt-10 md:grid-cols-[1.5fr_auto] md:items-end">
+            <SectionIntro
+              eyebrow="Community"
+              title="Pro-bono IT for local non-profits"
+              className="mb-0"
+            >
+              <p>
                 Churches, shelters, food banks, and other registered non-profits
                 in the London area can get networking and infrastructure help at
                 no cost when capacity allows.
               </p>
-            </div>
-            <span className="inline-flex items-center gap-1.5 text-sm font-medium text-foreground">
-              <Heart
-                className="h-4 w-4 text-brand-gradient-soft"
-                aria-hidden="true"
-              />
+            </SectionIntro>
+            <Link
+              to="/community"
+              className="group inline-flex items-center gap-1.5 text-sm font-medium text-foreground transition-colors hover:text-foreground/90 focus-visible:outline-none focus-visible:ring-3 focus-visible:ring-ring/50 md:justify-self-end md:pb-1"
+            >
               Learn about community support
               <ArrowRight
                 className="h-4 w-4 transition-transform group-hover:translate-x-0.5"
                 aria-hidden="true"
               />
-            </span>
-          </Link>
+            </Link>
+          </div>
         </section>
 
         <CTASection />
