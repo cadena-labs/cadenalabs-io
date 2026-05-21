@@ -51,7 +51,6 @@ pnpm run build
 pnpm run preview
 pnpm run cloudflare:build
 pnpm run cloudflare:deploy
-pnpm run cloudflare:preview
 pnpm run secrets:sync:1password
 pnpm run deploy:1password
 ```
@@ -154,31 +153,17 @@ Worker runtime secrets only; they are not checked into the repository.
 Cloudflare Workers Builds should run from the repository root with these
 settings:
 
-- Build command: `pnpm run cloudflare:build` (branch-aware; see below)
-- Deploy command: `pnpm run cloudflare:deploy`
-- Non-production branch deploy command: `pnpm run cloudflare:preview`
-- Node version: `.node-version` selects Node `24` LTS
+- **Production branch:** `main` only
+- **Builds for non-production branches:** disabled
+- **Build command:** `pnpm run cloudflare:build`
+- **Deploy command:** `pnpm run cloudflare:deploy`
+- **Node version:** `.node-version` selects Node `24` LTS
+
+Pull requests are validated in GitHub Actions (`pnpm run check`) with CI
+placeholder secrets only. Cloudflare does not build or deploy untrusted branches.
 
 After deploy, verify the contact form, Turnstile on your production hostname,
 and that `www` redirects to your apex domain if you use both.
-
-### Production vs preview builds
-
-Workers Builds uses one **build command** for every branch. `pnpm run
-cloudflare:build` reads `WORKERS_CI_BRANCH` and chooses the path:
-
-| Branch              | Build                                                      | Deploy (non-prod command)     |
-| ------------------- | ---------------------------------------------------------- | ----------------------------- |
-| `main` (production) | 1Password via `op run`, then `build:with-required-secrets` | `pnpm run cloudflare:deploy`  |
-| Any other branch    | CI placeholder secrets only (no 1Password)                 | `pnpm run cloudflare:preview` |
-
-Preview builds must not receive `OP_SERVICE_ACCOUNT_TOKEN` or
-`OP_ENVIRONMENT_ID`. The preview deploy command uploads a Worker version **without**
-`--secrets-file`; contact and Turnstile on preview URLs are not production-safe.
-
-For a trusted preview with real secrets (local or manual only), use `pnpm run
-cloudflare:preview:trusted` after `pnpm run cloudflare:build` on a branch you
-control.
 
 ### 1Password on production
 

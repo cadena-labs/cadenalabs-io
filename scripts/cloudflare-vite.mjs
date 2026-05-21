@@ -192,7 +192,7 @@ function cleanGeneratedPreviewSecrets() {
       force: true,
     });
     console.log(
-      `Removed generated preview secrets file ${relativeToRoot(generatedSecretsFile)}.`,
+      `Removed generated build secrets file ${relativeToRoot(generatedSecretsFile)}.`,
     );
   }
 }

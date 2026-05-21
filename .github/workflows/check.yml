@@ -6,8 +6,8 @@ on:
     branches:
       - main
 
-# CI runs on every push or PR. Only real values are placeholder strings; never
-# add real secrets here — untrusted branch builds must not receive them.
+# CI runs on every push or PR. Placeholder values satisfy build-time secret
+# assertions only; never add real secrets or OP_* credentials here.
 permissions:
   contents: read
 
