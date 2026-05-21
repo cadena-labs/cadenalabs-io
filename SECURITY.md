@@ -30,11 +30,11 @@ or pasted logs.
 ## Workers Builds and pull requests
 
 Production deploys on `main` use 1Password (`OP_SERVICE_ACCOUNT_TOKEN`,
-`OP_ENVIRONMENT_ID`) during build and deploy. Non-production Workers Builds use
-CI placeholder secrets only and must not have 1Password credentials configured
-in the dashboard.
+`OP_ENVIRONMENT_ID`) during build and deploy. Keep **builds for non-production
+branches disabled** in the Cloudflare dashboard so pull requests are not uploaded
+to the production Worker.
 
-Do not change preview build or deploy commands to load 1Password or upload runtime
-secrets unless you fully trust the branch. For maintainer-only previews with real
-secrets, use `pnpm run cloudflare:preview:trusted` locally, not untrusted PR
-automation.
+GitHub Actions runs `pnpm run check` on pull requests with CI placeholder secrets
+only. Do not add `OP_SERVICE_ACCOUNT_TOKEN` or `OP_ENVIRONMENT_ID` to GitHub
+Actions or re-enable non-production Workers Builds unless you fully understand
+the runtime secret exposure risk.

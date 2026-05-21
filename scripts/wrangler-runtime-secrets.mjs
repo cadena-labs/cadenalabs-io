@@ -28,7 +28,7 @@ const args = process.argv.slice(2);
 
 if (args.length === 0) {
   console.error(
-    "Usage: node scripts/wrangler-runtime-secrets.mjs <deploy|versions upload> [...wrangler args]",
+    "Usage: node scripts/wrangler-runtime-secrets.mjs deploy [...wrangler args]",
   );
   process.exit(1);
 }

@@ -17,10 +17,8 @@
     "build:with-required-secrets": "pnpm run assert:runtime-secrets && pnpm run build",
     "assert:runtime-secrets": "node ./scripts/assert-runtime-secrets.mjs",
     "check": "turbo run format:check lint typecheck test build && pnpm audit --prod",
-    "cloudflare:build": "node --experimental-strip-types ./scripts/cloudflare-build.mjs",
+    "cloudflare:build": "node ./scripts/cloudflare-build.mjs",
     "cloudflare:deploy": "./scripts/install-op.sh && ./scripts/with-op-environment.sh pnpm run deploy:with-secrets",
-    "cloudflare:preview": "node ./scripts/with-ci-build-secrets.mjs pnpm run versions:upload",
-    "cloudflare:preview:trusted": "./scripts/install-op.sh && ./scripts/with-op-environment.sh pnpm run versions:upload:with-secrets",
     "deploy": "pnpm run build && pnpm run deploy:built",
     "deploy:1password": "pnpm run cloudflare:build && pnpm run cloudflare:deploy",
     "deploy:built": "wrangler deploy --config dist/server/wrangler.json",
@@ -35,8 +33,6 @@
     "secrets:sync:1password": "./scripts/install-op.sh && ./scripts/with-op-environment.sh pnpm run secrets:sync",
     "test": "node --test --experimental-strip-types --no-warnings=ExperimentalWarning \"tests/**/*.test.ts\"",
     "typecheck": "node ./scripts/cloudflare-vite.mjs react-router typegen && pnpm run wrangler:types && tsc --noEmit",
-    "versions:upload": "wrangler versions upload --config dist/server/wrangler.json",
-    "versions:upload:with-secrets": "node ./scripts/wrangler-runtime-secrets.mjs versions upload",
     "wrangler:types": "wrangler types --include-runtime false"
   },
   "dependencies": {
