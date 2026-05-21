@@ -33,6 +33,16 @@ if (args.length === 0) {
   process.exit(1);
 }
 
+if (args[0] !== "deploy") {
+  console.error(
+    `Error: Only 'deploy' subcommand is allowed. Received: '${args[0]}'`,
+  );
+  console.error(
+    "Usage: node scripts/wrangler-runtime-secrets.mjs deploy [...wrangler args]",
+  );
+  process.exit(1);
+}
+
 if (!existsSync(builtWranglerConfig)) {
   console.error("Missing dist/server/wrangler.json. Run pnpm run build first.");
   process.exit(1);
