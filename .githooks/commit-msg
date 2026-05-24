@@ -1,0 +1,17 @@
+#!/usr/bin/env sh
+set -eu
+
+commit_msg_file="${1:-}"
+
+if [ -z "$commit_msg_file" ] || [ ! -f "$commit_msg_file" ]; then
+  echo "commit-msg hook: expected a commit message file path." >&2
+  exit 1
+fi
+
+if grep -Eiq '^[[:space:]]*co-authored-by:[[:space:]]*([^<]*(claude|codex|chatgpt|github[[:space:]]+copilot|copilot|cursor|devin|gemini|aider|windsurf)[^<]*<|[^<]*<[^>]*(anthropic|openai|copilot|cursor|devin|aider|windsurf)[^>]*>)' "$commit_msg_file"; then
+  echo "AI co-author trailers are not allowed in this repository." >&2
+  echo "Remove the AI Co-authored-by trailer and commit again." >&2
+  exit 1
+fi
+
+exit 0
