@@ -24,6 +24,164 @@ export type BlogPost = {
 
 export const posts: BlogPost[] = [
   {
+    slug: "password-managers-for-small-teams",
+    title: "Password managers for teams that outgrew the spreadsheet",
+    excerpt:
+      "Reused logins and shared admin passwords cause more real incidents than missing appliances. Here is how a business password manager fits a 5–50 seat office, and why we standardize on 1Password.",
+    category: "Cybersecurity",
+    date: "2026-06-01",
+    body: [
+      {
+        heading: "The breach that starts in the notes app",
+        paragraphs: [
+          "Most small offices do not lose data because they skipped a six-figure firewall. They lose it because the same password opened the vendor portal, the shared inbox, and the WiFi guest SSID someone documented in a group chat three years ago.",
+          'Spreadsheets, browser-only saves, and "we will change it when someone leaves" do not scale past a handful of people. The moment you hire admin staff, bookkeepers, or seasonal help, credential chaos becomes the default — and attackers know how to search for it.',
+        ],
+      },
+      {
+        heading: "What a business password manager actually does",
+        paragraphs: [
+          "A consumer save-in-the-browser habit is not the same product. Business password managers give you shared vaults with real permissions, an audit trail of who accessed what, and a single offboarding workflow when someone departs.",
+        ],
+        bullets: [
+          "Unique passwords per site — generated credentials so a leak at one vendor does not become a skeleton key for your email or bank portal.",
+          "Role-based sharing — finance sees finance vaults, operations sees operations, without everyone inheriting the domain admin password.",
+          'Faster onboarding — new hires receive vault access instead of a forwarded email chain labeled "passwords FINAL v7."',
+          "Cleaner exits — disable one account and rotate shared secrets instead of guessing which systems still have the old GM's login.",
+          "Room for MFA — store TOTP seeds and recovery codes where they are backed up, not on a sticky note under the keyboard.",
+        ],
+      },
+      {
+        heading: "Why we recommend 1Password for Ontario SMBs",
+        paragraphs: [
+          '1Password is a Canadian company with a business tier built for teams, not just families. For London-area clients that want strong credential hygiene without running their own secrets server, it hits the sweet spot: polished apps, sensible admin controls, and vault structure that matches how offices actually organize work (by department, by vendor, by "break glass" admin).',
+          'Cadena Labs helps offices roll out 1Password with a deliberate map: which vaults exist, who owns them, what must never be shared as a single "office" login, and how break-glass domain or firewall credentials stay limited to people who need them. The goal is not another subscription box to tick — it is making password rotation and access reviews something you can do on a Tuesday afternoon instead of a fire drill.',
+          "Other managers exist; the pattern is what matters. Pick one platform, ban shared sticky-note credentials for new systems, and enforce unique passwords on anything that touches money, email, or remote access.",
+        ],
+      },
+      {
+        heading: "Habits that fail vs. what we configure",
+        paragraphs: [
+          "Use this panel when you are deciding whether to keep limping along with browser autofill only.",
+        ],
+        referenceList: [
+          {
+            label: "Fails",
+            detail:
+              "One spreadsheet or chat thread holds vendor, banking, and admin passwords; departing staff may still have copies you never rotated.",
+          },
+          {
+            label: "Works",
+            detail:
+              "Each person has their own vault login; shared items live in named vaults with explicit membership and logging.",
+          },
+          {
+            label: "Admin creds",
+            detail:
+              "Domain, firewall, and ISP portal passwords sit in a small break-glass vault with two trusted owners, not in everyone's personal notes.",
+          },
+          {
+            label: "Offboarding",
+            detail:
+              "Disable the user's manager account first, then rotate shared secrets they could reach — same day, documented in the ticket.",
+          },
+        ],
+      },
+      {
+        heading: "Rollout without stopping the business",
+        paragraphs: [
+          "Start with leadership and anyone who holds vendor or financial logins. Import or recreate the top twenty accounts people actually use, not every dormant login from 2019. Turn on a strong account password and require MFA on the manager itself before you migrate the rest of the company.",
+          "Train in one short session: how to save, how to share into a vault, and what never to paste into email. Pair this with the security basics you already run on the network — segmented VLANs, safer DNS, and modern remote access — so credentials are not the last weak link holding the door open.",
+        ],
+      },
+    ],
+  },
+  {
+    slug: "when-your-vpn-is-the-problem",
+    title: "When your VPN is the problem",
+    excerpt:
+      "Shared VPN concentrators made sense once. For 5–50 seat teams with hybrid staff and segmented LANs, they often create more risk than they remove — and Zero Trust access is the practical fix.",
+    category: "Cybersecurity",
+    date: "2026-05-07",
+    body: [
+      {
+        heading: "The VPN that used to feel like progress",
+        paragraphs: [
+          "For years, the playbook was simple: punch a hole in the firewall, stand up a VPN concentrator, and tell remote staff to connect before they open the file share or line-of-business app. It beat emailing credentials or leaving RDP wide open.",
+          "The trouble is what changed around that VPN. More laptops off-site, more SaaS, more cameras and printers on the same flat LAN the VPN dumps people into. The concentrator still works — until it becomes the slowest, leakiest part of the week.",
+        ],
+      },
+      {
+        heading: "Why concentrator VPNs break down at 5–50 seats",
+        paragraphs: [
+          "Small and medium offices do not fail because they skipped a Fortune 500 appliance. They fail because the VPN model assumes remote users should join the whole internal network, the same way a PC plugged in at a desk would.",
+        ],
+        bullets: [
+          "Blast radius — one stolen laptop session or shared contractor login can reach every subnet the VPN routes, not just the app someone needed.",
+          'All-or-nothing access — granting "VPN" often means granting SMB, printers, management VLANs, and legacy servers because splitting tunnels and firewall rules got too hard to maintain.',
+          "Operational drag — concentrators need patching, licensing, capacity planning, and after-hours babysitting when ISP or firmware issues coincide with month-end close.",
+          "Identity lag — rotating a departing employee means updating AD, the VPN profile, and sometimes a shared PSK someone posted in a chat three years ago.",
+        ],
+      },
+      {
+        heading: "What clinics, agencies, and multi-site offices feel first",
+        paragraphs: [
+          "Professional firms and clinics notice it as compliance anxiety: remote access exists on paper, but nobody can explain which VLAN a home laptop touched last Tuesday. Agencies with a downtown office and a warehouse share one VPN profile until a vendor needs files and suddenly everyone is on the same tunnel.",
+          "Multi-site teams feel it as performance and trust — staff VPN home through head office to reach a cloud app that was never on the LAN, or they disable the VPN to get work done and quietly bypass the policy you thought you had.",
+        ],
+      },
+      {
+        heading: "Zero Trust access in one paragraph",
+        paragraphs: [
+          "Zero Trust Network Access (ZTNA) flips the default: start from deny, verify the person and the device, then allow specific resources — a file server, an RDP session, an internal web app — without treating the remote laptop like it lives on VLAN 10. It pairs well with the segmentation we already recommend on UniFi gear; the VPN used to punch through that work, while ZTNA respects it.",
+        ],
+      },
+      {
+        heading: "Why we reach for Tailscale on Ontario SMB jobs",
+        paragraphs: [
+          'Tailscale is a Canadian company, built on WireGuard, with a control plane that stays out of your hair once identity and policy are set. For London-area offices that want dependable remote access without another box in the DMZ, it is often the fastest path from "everyone on the VPN" to named users reaching named services.',
+          'Cadena Labs deploys Tailscale where the brief is practical: per-user sign-in through your existing identity provider where possible, device posture checks when you need them, and ACLs written in plain language so "finance can reach this share" does not also mean "finance can reach the camera VLAN." Mesh connectivity helps multi-site and home users without hair-pinning all traffic through a single concentrator.',
+          "Tailscale is not the only serious option — Twingate and similar brokers fit when you want a vendor-hosted path to SaaS and private apps without running your own overlay. The pattern matters more than the logo: verify first, expose least, log what you would want in a review.",
+        ],
+      },
+      {
+        heading: "VPN habits vs. what we configure instead",
+        paragraphs: [
+          'Use this as a sanity check before you renew another year of concentrator licenses or open port 1194 because "it has always worked."',
+        ],
+        referenceList: [
+          {
+            label: "Old habit",
+            detail:
+              "Remote user connects to VPN → receives routes to broad internal subnets → uses the same flat paths as on-site staff.",
+          },
+          {
+            label: "ZTNA habit",
+            detail:
+              "User signs in with identity → device is known → policy allows only named hosts, ports, or apps → everything else stays unreachable.",
+          },
+          {
+            label: "Segmentation",
+            detail:
+              "Keep management, staff, printers, cameras, and guests on separate VLANs on site; remote access should not recreate a flat LAN in the tunnel.",
+          },
+          {
+            label: "Logging",
+            detail:
+              'Record who reached which resource and when — you do not need a SOC, but you do need more than "VPN connected" in a generic firewall log.',
+          },
+        ],
+      },
+      {
+        heading: "Migrating without a big-bang weekend",
+        paragraphs: [
+          "Move in phases. Stand up Tailscale (or your chosen ZTNA) beside the existing VPN, migrate one team or one application at a time, and keep the legacy concentrator read-only for rollback until ACLs are tested from real home networks. Document which internal IPs and ports each role needs — that list becomes your policy file, not a spaghetti of firewall any-rules.",
+          "When the last critical app no longer requires full-tunnel routes, retire the concentrator and shrink external attack surface. If you already split VLANs per our networking guides, you are halfway there; remote access should inherit those boundaries, not erase them.",
+        ],
+      },
+    ],
+  },
+  {
     slug: "getting-started-with-unifi",
     title: "Getting Started with UniFi",
     excerpt:
