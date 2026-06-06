@@ -4,6 +4,7 @@ packages:
   - "packages/*"
 
 overrides:
+  # hono: CVE-2026-47676 (mount prefix percent-encoding), CVE-2026-47674 (ip-restriction IPv6 bypass), CVE-2026-47675 (cookie SameSite/priority injection), CVE-2026-47673 (jwt/jwk Authorization scheme validation)
   hono@<4.12.21: ">=4.12.21"
   qs@>=6.11.1 <=6.15.1: ">=6.15.2"
   ws@>=8.0.0 <8.20.1: ">=8.20.1"

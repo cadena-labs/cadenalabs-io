@@ -54,7 +54,7 @@ export const posts: BlogPost[] = [
       {
         heading: "Why we recommend 1Password for Ontario SMBs",
         paragraphs: [
-          '1Password is a Canadian company with a business tier built for teams, not just families. For London-area clients that want strong credential hygiene without running their own secrets server, it hits the sweet spot: polished apps, sensible admin controls, and vault structure that matches how offices actually organize work (by department, by vendor, by "break glass" admin).',
+          '1Password is a Canadian company with a business tier built for teams, not just families. For London-area clients that want strong credential hygiene without running their own secrets server, it hits the sweet spot: polished apps, sensible admin controls, and vault structure that matches how offices actually organize work (by department, by vendor, by "break-glass" admin).',
           'Cadena Labs helps offices roll out 1Password with a deliberate map: which vaults exist, who owns them, what must never be shared as a single "office" login, and how break-glass domain or firewall credentials stay limited to people who need them. The goal is not another subscription box to tick — it is making password rotation and access reviews something you can do on a Tuesday afternoon instead of a fire drill.',
           "Other managers exist; the pattern is what matters. Pick one platform, ban shared sticky-note credentials for new systems, and enforce unique passwords on anything that touches money, email, or remote access.",
         ],
