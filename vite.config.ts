@@ -3,6 +3,9 @@ import { reactRouter } from "@react-router/dev/vite";
 import tailwindcss from "@tailwindcss/vite";
 import { defineConfig } from "vite";
 
+const cloudflareConfigPath =
+  process.env.CLOUDFLARE_VITE_WRANGLER_CONFIG_PATH ?? "dev.wrangler.jsonc";
+
 export default defineConfig(({ isSsrBuild }) => ({
   build: {
     rollupOptions: isSsrBuild
@@ -15,16 +18,14 @@ export default defineConfig(({ isSsrBuild }) => ({
     tsconfigPaths: true,
   },
   server: {
+    host: "0.0.0.0",
     port: 3333,
     strictPort: true,
-    watch: {
-      ignored: ["**/.dev.vars", "**/.dev.vars.*", "**/.env", "**/.env.*"],
-    },
   },
   plugins: [
     tailwindcss(),
     cloudflare({
-      configPath: process.env.CADENA_CLOUDFLARE_VITE_CONFIG,
+      configPath: cloudflareConfigPath,
       viteEnvironment: { name: "ssr" },
     }),
     reactRouter(),
