@@ -42,6 +42,7 @@ via GitHub issues (see [`CONTRIBUTING.md`](CONTRIBUTING.md)).
 ## Commands
 
 ```sh
+pnpm run dev:op
 pnpm run dev
 pnpm run check
 pnpm run lint
@@ -57,12 +58,12 @@ pnpm run deploy:1password
 
 `pnpm run check` is the CI parity command. It runs formatting checks, linting,
 type generation/typechecking, a production build, and a production dependency
-audit. Keep the local 1Password `.dev.vars` mount available for local runs; CI
-does not commit or read plaintext env files.
+audit. Local maintainer runs use `op run` via `dev:op`; CI does not commit or
+read plaintext env files.
 
-`pnpm run typecheck` regenerates React Router route types and a slim Wrangler
-`Env` declaration (`wrangler types --include-runtime false`) before running
-`tsc --noEmit`. Full Workers runtime types are omitted from the repo on purpose.
+`pnpm run typecheck` regenerates React Router route types and Wrangler
+`worker-configuration.d.ts` from `dev.wrangler.jsonc` (`wrangler types --env-file
+/dev/null`) before running `tsc --noEmit`.
 
 ## Repository layout
 
@@ -73,17 +74,15 @@ does not commit or read plaintext env files.
 - shadcn/ui components are source-owned under `app/components/ui/`; shared site
   primitives live in `app/components/site.tsx`.
 - Generated output and local runtime state are ignored: top-level `/dist/`,
-  `.react-router/`, `.wrangler/`, `bin/`, and mounted `.dev.vars` files. Do not
+  `.react-router/`, `.wrangler/`, `bin/`, and local `.dev.vars` files. Do not
   commit `dist/` even if a tool suggests adding untracked files in bulk.
 - GitHub Actions runs `pnpm install --frozen-lockfile` and `pnpm run check` on
   pushes to `main`.
-- `wrangler.jsonc` is the source Cloudflare config. `worker-configuration.d.ts`
-  holds generated `Env` bindings only (~25 lines); `cloudflare-globals.d.ts`
-  pulls in `@cloudflare/workers-types` for `Fetcher`, `ExportedHandler`, etc.
-  Rerun `pnpm run wrangler:types` after changing bindings or secrets in Wrangler
-  config.
-- The pnpm scripts also generate the Cloudflare Vite plugin's relative-path config
-  under ignored `.wrangler/` at runtime.
+- `dev.wrangler.jsonc` is the committed local-development Wrangler config.
+  `wrangler.jsonc` adds production routes and is used for production builds
+  (`build:production`). `worker-configuration.d.ts` is generated from
+  `dev.wrangler.jsonc`. Rerun `pnpm run wrangler:types` after changing bindings
+  or secrets in Wrangler config.
 
 ## Cloudflare Workers Paid
 
@@ -105,12 +104,37 @@ Once that destination exists, add it under `observability.logs.destinations` or
 
 Secrets are managed with 1Password Environments as the source of truth.
 
-**Local dev.** Mount the 1Password Environment to `.dev.vars` from the
-1Password desktop app, then run the Vite dev server:
+**Local dev (maintainers).** Resolve the Environment ID once, export it for the
+shell session (or your profile), unlock the 1Password desktop app with CLI
+integration enabled, then inject secrets with `op run`:
+
+1. **Resolve the ID** for the Environment named `cadenalabs-io`:
+   - **Cursor / agents:** 1Password Environments MCP — `authenticate`, then
+     `list_environments`; use the `environmentId` for that Environment. Confirm
+     variable names with `list_variables` (names only).
+   - **1Password desktop:** Developer → Environments → `cadenalabs-io` → Manage
+     environment → Copy environment ID.
+2. **Run dev** (do not commit the ID; add the export to your shell profile if
+   you want it persistent locally):
 
 ```sh
-pnpm run dev
+export CADENALABS_DEV_1PASSWORD_ENVIRONMENT_ID="<environment-id>"
+pnpm run dev:op
 ```
+
+`dev:op` runs `react-router dev` inside `op run --environment` and passes
+injected values to the Worker through `process.env`. `dev.wrangler.jsonc`
+declares `secrets.required` so Wrangler loads the allowlist from the process
+environment when no `.dev.vars` file is present. Do **not** mount a 1Password
+local `.dev.vars` FIFO while the Vite dev server is running; it can cause
+restart loops and conflicts with multi-read startup.
+
+Use `pnpm run preview:op` to test the production build the same way.
+
+The Vite dev server binds to `0.0.0.0:3333` (`vite.config.ts`) so you can reach
+the site from another device on a trusted LAN or from a container. On untrusted
+networks, set `server.host` to `"127.0.0.1"` in `vite.config.ts` (or remove
+`host` to use the Vite default) for loopback-only access.
 
 If you are not using 1Password locally, copy the Workers local-dev example and
 fill it with local or test values:
@@ -120,13 +144,8 @@ cp .dev.vars.example .dev.vars
 pnpm run dev
 ```
 
-1Password mounts local env files as named pipes. Cloudflare's Vite plugin reads
-Wrangler secrets more than once during startup, so the pnpm scripts first read
-`.dev.vars` once and pass the values to the Worker runtime through
-`process.env`. This keeps local behavior aligned with Cloudflare's secret
-loading without writing plaintext secrets into `dist/server`. Existing
-environment variables take precedence over `.dev.vars`, so `op run` and
-Cloudflare build variables cannot be overwritten by the local mount.
+Wrangler reads plaintext `.dev.vars` directly for forks and ad hoc testing.
+Keep that file gitignored.
 
 Use preview only when you want to test the built output:
 
@@ -134,8 +153,7 @@ Use preview only when you want to test the built output:
 pnpm run preview
 ```
 
-Mounted and copied secret files are ignored by git. Do not commit plaintext
-secret files.
+Copied secret files are ignored by git. Do not commit plaintext secret files.
 The Environment should define:
 
 - `RESEND_API_KEY`
