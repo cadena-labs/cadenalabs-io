@@ -131,6 +131,11 @@ restart loops and conflicts with multi-read startup.
 
 Use `pnpm run preview:op` to test the production build the same way.
 
+The Vite dev server binds to `0.0.0.0:3333` (`vite.config.ts`) so you can reach
+the site from another device on a trusted LAN or from a container. On untrusted
+networks, set `server.host` to `"127.0.0.1"` in `vite.config.ts` (or remove
+`host` to use the Vite default) for loopback-only access.
+
 If you are not using 1Password locally, copy the Workers local-dev example and
 fill it with local or test values:
 
