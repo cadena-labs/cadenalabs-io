@@ -52,7 +52,7 @@
   },
   "devDependencies": {
     "@cloudflare/vite-plugin": "1.40.2",
-    "@cloudflare/workers-types": "4.20260615.1",
+    "@cloudflare/workers-types": "4.20260616.1",
     "@eslint/js": "^9.39.4",
     "@react-router/dev": "7.17.0",
     "@resvg/resvg-js": "^2.6.2",
@@ -70,7 +70,7 @@
     "tailwindcss": "^4.3.1",
     "turbo": "2.9.18",
     "typescript": "6.0.3",
-    "typescript-eslint": "^8.61.0",
+    "typescript-eslint": "^8.61.1",
     "vite": "8.0.16",
     "wrangler": "4.100.0"
   }
