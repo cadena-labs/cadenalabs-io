@@ -2,7 +2,6 @@
 
 [![Check](https://github.com/cadena-labs/cadenalabs-io/actions/workflows/check.yml/badge.svg)](https://github.com/cadena-labs/cadenalabs-io/actions/workflows/check.yml)
 [![CodeQL](https://github.com/cadena-labs/cadenalabs-io/actions/workflows/codeql.yml/badge.svg)](https://github.com/cadena-labs/cadenalabs-io/actions/workflows/codeql.yml)
-[![CodeRabbit Pull Request Reviews](https://img.shields.io/coderabbit/prs/github/cadena-labs/cadenalabs-io?utm_source=oss&utm_medium=github&utm_campaign=cadena-labs%2Fcadenalabs-io&labelColor=171717&color=FF570A&link=https%3A%2F%2Fcoderabbit.ai&label=CodeRabbit+Reviews)](https://coderabbit.ai)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![Node](https://img.shields.io/badge/node-24-339933?logo=node.js&logoColor=white)](.node-version)
 [![Cloudflare Workers](https://img.shields.io/badge/Cloudflare-Workers-F38020?logo=cloudflare&logoColor=white)](https://developers.cloudflare.com/workers/)
