@@ -3,8 +3,7 @@ import type { ActionFunctionArgs } from "react-router";
 import { isValidEmail } from "~/lib/email";
 
 export type ContactActionData =
-  | { ok: true; message: string }
-  | { ok: false; message: string };
+  { ok: true; message: string } | { ok: false; message: string };
 
 type TurnstileOutcome = {
   success: boolean;
