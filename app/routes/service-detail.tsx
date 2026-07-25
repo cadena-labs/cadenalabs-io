@@ -19,7 +19,9 @@ export async function loader({ params }: LoaderFunctionArgs) {
   return service;
 }
 
-export const meta: MetaFunction<typeof loader> = ({ data: service }) => {
+export const meta: MetaFunction<typeof loader> = ({
+  loaderData: service,
+}) => {
   const base = pageMeta({
     description: service?.description ?? "Cadena Labs service details.",
     pathname: service ? `/services/${service.slug}` : "/services",
