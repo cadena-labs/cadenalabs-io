@@ -6,13 +6,15 @@ import { defineConfig } from "vite";
 const cloudflareConfigPath =
   process.env.CLOUDFLARE_VITE_WRANGLER_CONFIG_PATH ?? "dev.wrangler.jsonc";
 
-export default defineConfig(({ isSsrBuild }) => ({
-  build: {
-    rollupOptions: isSsrBuild
-      ? {
+export default defineConfig({
+  environments: {
+    ssr: {
+      build: {
+        rollupOptions: {
           input: "./server/app.ts",
-        }
-      : undefined,
+        },
+      },
+    },
   },
   resolve: {
     tsconfigPaths: true,
@@ -30,4 +32,4 @@ export default defineConfig(({ isSsrBuild }) => ({
     }),
     reactRouter(),
   ],
-}));
+});

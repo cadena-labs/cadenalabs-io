@@ -26,6 +26,7 @@ import { Input } from "~/components/ui/input";
 import { Label } from "~/components/ui/label";
 import { Separator } from "~/components/ui/separator";
 import { Textarea } from "~/components/ui/textarea";
+import { cloudflareContext } from "~/lib/cloudflare-context";
 import { handleContactAction } from "~/lib/contact.server";
 import { pageMeta } from "~/lib/seo";
 
@@ -60,7 +61,7 @@ declare global {
 
 export function loader({ context }: LoaderFunctionArgs) {
   return {
-    turnstileSiteKey: context.cloudflare.env.TURNSTILE_SITE_KEY,
+    turnstileSiteKey: context.get(cloudflareContext).env.TURNSTILE_SITE_KEY,
   };
 }
 
