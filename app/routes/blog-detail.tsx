@@ -20,7 +20,7 @@ export async function loader({ params }: LoaderFunctionArgs) {
   return post;
 }
 
-export const meta: MetaFunction<typeof loader> = ({ data: post }) => {
+export const meta: MetaFunction<typeof loader> = ({ loaderData: post }) => {
   const base = pageMeta({
     description: post?.excerpt ?? "Cadena Labs blog post.",
     pathname: post ? `/blog/${post.slug}` : "/blog",

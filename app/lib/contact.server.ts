@@ -1,5 +1,6 @@
 import type { ActionFunctionArgs } from "react-router";
 
+import { cloudflareContext } from "~/lib/cloudflare-context";
 import { isValidEmail } from "~/lib/email";
 
 export type ContactActionData =
@@ -47,8 +48,10 @@ export async function handleContactAction({
     };
   }
 
+  const { env } = context.get(cloudflareContext);
+
   const turnstileValid = await verifyTurnstile({
-    env: context.cloudflare.env,
+    env,
     remoteIp:
       request.headers.get("CF-Connecting-IP") ??
       request.headers.get("X-Forwarded-For") ??
@@ -64,7 +67,7 @@ export async function handleContactAction({
   }
 
   const sent = await sendContactEmail({
-    env: context.cloudflare.env,
+    env,
     email,
     message,
     name,
