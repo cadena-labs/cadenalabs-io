@@ -19,3 +19,7 @@ overrides:
   "@babel/core@<=7.29.0": ">=7.29.6"
   # ws: GHSA-96hv-2xvq-fx4p (memory exhaustion DoS)
   ws@>=8.0.0 <8.21.0: ">=8.21.0"
+  # undici: GHSA-8xcm-r25x-g524, GHSA-4cwx-7wf7-3272, GHSA-jr45-8vmc-qm54, GHSA-v3r7-h72x-cjcm, GHSA-m8rv-5g2x-5cg5 (via miniflare)
+  undici@>=7.0.0 <7.29.0: ">=7.29.0"
+  # fast-uri: GHSA-7p8r-x3mc-p8w7 (host confusion via backslash authority introducer)
+  fast-uri@>=3.0.0 <3.1.5: "3.1.5"
