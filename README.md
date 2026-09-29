@@ -9,7 +9,7 @@
 [![pnpm](https://img.shields.io/badge/maintained%20with-pnpm-cc00ff?logo=pnpm&logoColor=white)](https://pnpm.io/)
 
 Open-source marketing site for [Cadena Labs](https://cadenalabs.io) (London,
-Ontario): React Router v7, Tailwind v4, shadcn/ui, contact form (Resend +
+Ontario): React Router v7, Tailwind v4, shadcn/ui, contact form (Cloudflare Email Service +
 Turnstile), deployed on Cloudflare Workers with Workers Static Assets.
 
 The code is [MIT licensed](LICENSE) so anyone can read, verify, and run their
@@ -155,15 +155,85 @@ pnpm run preview
 Copied secret files are ignored by git. Do not commit plaintext secret files.
 The Environment should define:
 
-- `RESEND_API_KEY`
-- `RESEND_FROM_EMAIL` - verified sender address in Resend (not committed)
-- `RESEND_FROM_NAME` - display name for outbound mail (not committed)
+- `EMAIL_FROM_ADDRESS` - sender address on a domain onboarded to Cloudflare Email Sending (not committed)
+- `EMAIL_FROM_NAME` - display name for outbound mail (not committed)
 - `CONTACT_EMAIL` - inbox that receives contact submissions
 - `TURNSTILE_SITE_KEY`
 - `TURNSTILE_SECRET_KEY`
 
-`RESEND_FROM_EMAIL` must use a domain verified in Resend. These values are
-Worker runtime secrets only; they are not checked into the repository.
+`EMAIL_FROM_ADDRESS` must use a domain onboarded to Cloudflare Email Sending
+in the same account as the Worker. These values are Worker runtime secrets only;
+they are not checked into the repository. The `EMAIL` binding is configured in
+both Wrangler files; no email API key or SDK is required.
+
+## Cloudflare Email Service
+
+The contact form awaits `env.EMAIL.send()` and sends both HTML and plain text
+to `CONTACT_EMAIL`, with the visitor's address as `replyTo`. Success means the
+provider accepted the message, not that it reached the inbox. Rejected sends
+return the existing form error without retries or fallback. Worker logs include
+`contact_email_accepted` with a message ID or `contact_email_error` with an
+available provider error code; submission content is excluded.
+
+Before deploying, confirm Email Sending is available in the Worker's account,
+review its sending quota, and onboard the sender domain under **Compute →
+Email Service → Email Sending**. Review the generated bounce-subdomain MX, SPF,
+and DKIM records, preserving your receiving mailbox's MX records and existing
+DMARC policy. Email Sending is separate from inbound Email Routing; this site
+does not need a Worker `email()` handler.
+
+Cadena Labs sends from `mail.cadenalabs.io`. Onboard that subdomain by selecting
+the `cadenalabs.io` zone and entering `mail` as the subdomain. Its sending
+records belong under `cf-bounce.mail.cadenalabs.io` and
+`cf-bounce._domainkey.mail.cadenalabs.io`; its DMARC record belongs at
+`_dmarc.mail.cadenalabs.io`. Preserve the apex Google Workspace MX records
+and `_dmarc.cadenalabs.io` policy.
+
+See [domain setup](https://developers.cloudflare.com/email-service/configuration/domains/)
+and [sending limits](https://developers.cloudflare.com/email-service/platform/limits/).
+
+### Local email testing
+
+Both committed configs omit `remote: true`, so local development simulates
+email sending. Simulated messages are logged and saved locally for inspection;
+use synthetic inquiries. CI uses placeholder settings and mocked bindings.
+
+For a real delivery test, temporarily change only `dev.wrangler.jsonc`:
+
+```jsonc
+"send_email": [{ "name": "EMAIL", "remote": true }]
+```
+
+Authenticate Wrangler to the correct Cloudflare account, inject an onboarded
+sender and a controlled test `CONTACT_EMAIL`, and run `pnpm run dev:op`.
+This sends real mail. Complete the form and check receipt and Reply behavior,
+then revert the temporary config change. Keep production builds on
+`wrangler.jsonc`.
+
+See [local development](https://developers.cloudflare.com/email-service/local-development/sending/).
+
+### Resend migration and rollback
+
+1. In the 1Password Environment, add `EMAIL_FROM_ADDRESS` with the existing
+   `RESEND_FROM_EMAIL` value and `EMAIL_FROM_NAME` with the existing
+   `RESEND_FROM_NAME` value. Retain the original settings and `RESEND_API_KEY`
+   for rollback; the new deployment allowlist excludes them.
+2. Verify the Cloudflare sender domain and quota before pushing the change to
+   `main`. Record the current production Worker version and deployment ID.
+3. Deploy through the existing main-branch Workers Builds pipeline. Submit a
+   controlled inquiry through production with Turnstile verification. Confirm
+   inbox receipt, SPF/DKIM/DMARC results, and that Reply targets the visitor.
+4. Check [Email Sending activity](https://developers.cloudflare.com/email-service/observability/logs/)
+   after cutover and repeat a controlled submission after 24 hours. Worker logs
+   are sampled; use email activity and the receiving inbox to confirm delivery.
+   Restore the recorded Worker version if sending fails, retaining the original
+   Resend credentials and sender DNS records throughout the rollback window.
+   If the Resend domain has already been deleted, re-add and verify it before
+   restoring a Resend-based version.
+5. After seven stable days, revoke this site's Resend API key, remove the old
+   Resend settings from 1Password and current Worker secrets, and remove DNS
+   records used exclusively by this integration. Delete the Resend domain only
+   if no other application uses it. Preserve shared mailbox and DNS records.
 
 ## Cloudflare Git Deploys
 

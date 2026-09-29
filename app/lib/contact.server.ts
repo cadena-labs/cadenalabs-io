@@ -1,7 +1,8 @@
 import type { ActionFunctionArgs } from "react-router";
 
-import { cloudflareContext } from "~/lib/cloudflare-context";
-import { isValidEmail } from "~/lib/email";
+import { cloudflareContext } from "./cloudflare-context.ts";
+import { sendContactEmail } from "./contact-email.server.ts";
+import { isValidEmail } from "./email.ts";
 
 export type ContactActionData =
   { ok: true; message: string } | { ok: false; message: string };
@@ -148,97 +149,4 @@ async function verifyTurnstile({
 
     return false;
   }
-}
-
-async function sendContactEmail({
-  email,
-  env,
-  message,
-  name,
-}: {
-  email: string;
-  env: Env;
-  message: string;
-  name: string;
-}) {
-  const subject = "cadenalabs.io Inquiry Form Submission";
-  const text = [
-    "New Cadena Labs inquiry",
-    "",
-    `Name: ${name}`,
-    `Email: ${email}`,
-    "",
-    message,
-  ].join("\n");
-  const html = `
-    <h1>New Cadena Labs inquiry</h1>
-    <p><strong>Name:</strong> ${escapeHtml(name)}</p>
-    <p><strong>Email:</strong> ${escapeHtml(email)}</p>
-    <p><strong>Message:</strong></p>
-    <p>${escapeHtml(message).replace(/\n/g, "<br>")}</p>
-  `;
-
-  try {
-    const response = await fetch("https://api.resend.com/emails", {
-      body: JSON.stringify({
-        from: `${env.RESEND_FROM_NAME} <${env.RESEND_FROM_EMAIL}>`,
-        html,
-        reply_to: email,
-        subject,
-        text,
-        to: [env.CONTACT_EMAIL],
-      }),
-      headers: {
-        Authorization: `Bearer ${env.RESEND_API_KEY}`,
-        "Content-Type": "application/json",
-        "Idempotency-Key": crypto.randomUUID(),
-      },
-      method: "POST",
-    });
-
-    if (!response.ok) {
-      const errorMessage = await readProviderError(response);
-      console.error(
-        JSON.stringify({
-          event: "resend_error",
-          message: errorMessage,
-          status: response.status,
-        }),
-      );
-    }
-
-    return response.ok;
-  } catch (error) {
-    console.error(
-      JSON.stringify({
-        event: "resend_error",
-        message: error instanceof Error ? error.message : "Unknown error",
-      }),
-    );
-
-    return false;
-  }
-}
-
-async function readProviderError(response: Response) {
-  try {
-    const payload = (await response.json()) as { message?: unknown };
-
-    if (typeof payload.message === "string") {
-      return payload.message;
-    }
-
-    return "Unknown Resend error";
-  } catch {
-    return "Unable to parse Resend error";
-  }
-}
-
-function escapeHtml(value: string) {
-  return value
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
-    .replace(/"/g, "&quot;")
-    .replace(/'/g, "&#039;");
 }

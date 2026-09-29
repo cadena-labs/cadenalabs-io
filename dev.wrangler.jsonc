@@ -10,11 +10,11 @@
     "html_handling": "none",
     "not_found_handling": "none",
   },
+  "send_email": [{ "name": "EMAIL" }],
   "secrets": {
     "required": [
-      "RESEND_API_KEY",
-      "RESEND_FROM_EMAIL",
-      "RESEND_FROM_NAME",
+      "EMAIL_FROM_ADDRESS",
+      "EMAIL_FROM_NAME",
       "CONTACT_EMAIL",
       "TURNSTILE_SITE_KEY",
       "TURNSTILE_SECRET_KEY",

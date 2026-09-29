@@ -11,7 +11,8 @@ Replace Cadena-specific content, assets, and configuration with your own.
 - Node.js `^20.19` or `>=22.12` (see `.node-version`)
 - [pnpm](https://pnpm.io/) `10.33.0` (see `packageManager` in `package.json`)
 - A Cloudflare account (Workers + custom domain)
-- Optional but recommended: [Resend](https://resend.com/) and
+- [Cloudflare Email Sending](https://developers.cloudflare.com/email-service/get-started/send-emails/)
+  on Workers Paid, with an onboarded sender domain, and
   [Turnstile](https://developers.cloudflare.com/turnstile/) for the contact form
 
 ## Quick start
@@ -21,7 +22,7 @@ git clone https://github.com/cadena-labs/cadenalabs-io.git my-site
 cd my-site
 pnpm install
 cp .dev.vars.example .dev.vars
-# Edit .dev.vars with your Resend and Turnstile values
+# Edit .dev.vars with your sender, destination, and Turnstile values
 pnpm run dev
 ```
 
@@ -52,7 +53,7 @@ Work through these in order:
 6. **`public/images/`** — logo and favicon assets
 7. **`public/og-image.png`** — run `pnpm run og:generate` after updating branding, or replace the file
 8. **`wrangler.jsonc`** — Worker `name` and `routes` / `custom_domain` for your domain
-9. **`.dev.vars`** — your Resend and Turnstile secrets (never commit this file)
+9. **`.dev.vars`** — your email settings and Turnstile secrets (never commit this file)
 
 Remove or rewrite Cadena-specific routes (`community`, `residential`) if they
 do not apply to your business.
@@ -61,20 +62,30 @@ do not apply to your business.
 
 Copy `.dev.vars.example` to `.dev.vars` and set:
 
-- `RESEND_API_KEY`, `RESEND_FROM_EMAIL`, `RESEND_FROM_NAME`, `CONTACT_EMAIL`
+- `EMAIL_FROM_ADDRESS`, `EMAIL_FROM_NAME`, `CONTACT_EMAIL`
 - `TURNSTILE_SITE_KEY`, `TURNSTILE_SECRET_KEY`
 
-`RESEND_FROM_EMAIL` must use a domain verified in Resend. Add your production
+`EMAIL_FROM_ADDRESS` must use a domain onboarded to Cloudflare Email Sending
+in the Worker's account. Review the generated sending DNS records while
+preserving your mailbox MX records and DMARC policy. No email API key is needed:
+both Wrangler configs include the native `EMAIL` binding. Add your production
 hostname to the Turnstile widget allowlist in the Cloudflare dashboard.
+
+Local development simulates email delivery by default. To test real delivery,
+temporarily set `remote: true` on the `EMAIL` entry in
+`dev.wrangler.jsonc`, authenticate Wrangler, and use a controlled destination
+inbox. Revert that change after testing. See the **Local email testing** section
+in `README.md`.
 
 ## Deploy on Cloudflare
 
 ### Option A — Wrangler + manual secrets
 
 ```sh
-pnpm run build
+pnpm run build:production
 # Set secrets in the Cloudflare dashboard or:
-# wrangler secret put RESEND_API_KEY
+# pnpm exec wrangler secret put EMAIL_FROM_ADDRESS --config dist/server/wrangler.json
+# Repeat for EMAIL_FROM_NAME, CONTACT_EMAIL, TURNSTILE_SITE_KEY, TURNSTILE_SECRET_KEY.
 pnpm run deploy:built
 ```
 
@@ -94,7 +105,8 @@ You can ignore 1Password entirely and use dashboard secrets or
 
 - [ ] Custom domain on the Worker; `www` redirects to apex if you use both
 - [ ] Turnstile hostname allowlist includes your apex domain
-- [ ] Resend domain verified; test contact form end-to-end
+- [ ] Cloudflare sender domain verified and sending quota reviewed
+- [ ] Contact form delivers to your inbox; SPF/DKIM/DMARC pass; Reply targets the visitor
 - [ ] WAF rate limiting on `POST /contact` (Cloudflare dashboard)
 - [ ] `pnpm run check` passes before you deploy
 

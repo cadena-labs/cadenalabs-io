@@ -21,9 +21,8 @@ jobs:
     runs-on: ubuntu-latest
     env:
       CONTACT_EMAIL: ci@example.com
-      RESEND_API_KEY: ci
-      RESEND_FROM_EMAIL: ci-from@example.com
-      RESEND_FROM_NAME: CI Sender
+      EMAIL_FROM_ADDRESS: ci-from@example.com
+      EMAIL_FROM_NAME: CI Sender
       TURNSTILE_SECRET_KEY: ci
       TURNSTILE_SITE_KEY: ci
 
