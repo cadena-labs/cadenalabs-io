@@ -11,8 +11,9 @@ overrides:
   esbuild@>=0.17.0 <0.28.1: ">=0.28.1"
   # js-yaml: GHSA-52cp-r559-cp3m (merge-key quadratic CPU), GHSA-h67p-54hq-rp68 (merge key DoS), GHSA-2883-xcg3-v3hh
   js-yaml@>=4.0.0 <4.3.2: "4.3.2"
-  # brace-expansion: GHSA-3jxr-9vmj-r5cp (exponential {} expansion), GHSA-mh99-v99m-4gvg (unbounded expansion OOM)
-  brace-expansion@<1.1.17: "1.1.18"
+  # brace-expansion: GHSA-3jxr-9vmj-r5cp (exponential {} expansion), GHSA-mh99-v99m-4gvg (unbounded expansion OOM),
+  # GHSA-q2hr-2g5m-vwhr (quadratic {a},b} rewrite)
+  brace-expansion@<1.1.21: "^1.1.21"
   # valibot: GHSA-5qjj-4xww-7phc (record() flatten inherited Object keys)
   valibot@<=1.4.1: "1.4.2"
   # @babel/core: GHSA-4x5r-pxfx-6jf8 (sourceMappingURL file read)
