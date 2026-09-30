@@ -11,6 +11,14 @@ updates:
     open-pull-requests-limit: 5
     versioning-strategy: "increase"
     groups:
+      # React and React DOM must ship at the same version or server rendering
+      # breaks. Listed first because Dependabot uses the first matching group.
+      react:
+        patterns:
+          - "react"
+          - "react-dom"
+          - "@types/react"
+          - "@types/react-dom"
       dev-dependencies:
         dependency-type: "development"
         update-types:
