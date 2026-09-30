@@ -19,6 +19,11 @@ updates:
           - "react-dom"
           - "@types/react"
           - "@types/react-dom"
+      # React Router packages share a release version and peer-depend on each other.
+      react-router:
+        patterns:
+          - "react-router"
+          - "@react-router/*"
       dev-dependencies:
         dependency-type: "development"
         update-types:
