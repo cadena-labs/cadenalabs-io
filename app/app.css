@@ -5,9 +5,7 @@
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
 
-/* Reserved for the wordmark in the site header / footer only.
-   The chain logo's wordmark is drawn in Space Grotesk Bold; nothing else
-   on the site should use this family. */
+/* Matches the logo wordmark. Header/footer wordmark only. */
 @font-face {
   font-family: "Space Grotesk";
   src: url("/fonts/SpaceGrotesk-Bold.ttf") format("truetype");
@@ -30,19 +28,6 @@
   --font-wordmark:
     "Space Grotesk", "Geist Variable", ui-sans-serif, system-ui, sans-serif;
 
-  --color-sidebar-ring: var(--sidebar-ring);
-  --color-sidebar-border: var(--sidebar-border);
-  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
-  --color-sidebar-accent: var(--sidebar-accent);
-  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
-  --color-sidebar-primary: var(--sidebar-primary);
-  --color-sidebar-foreground: var(--sidebar-foreground);
-  --color-sidebar: var(--sidebar);
-  --color-chart-5: var(--chart-5);
-  --color-chart-4: var(--chart-4);
-  --color-chart-3: var(--chart-3);
-  --color-chart-2: var(--chart-2);
-  --color-chart-1: var(--chart-1);
   --color-ring: var(--ring);
   --color-input: var(--input);
   --color-border: var(--border);
@@ -93,26 +78,9 @@
   --input: oklch(1 0 0 / 12%);
   --ring: oklch(1 0 0 / 35%);
 
-  --chart-1: oklch(0.97 0 0);
-  --chart-2: oklch(0.78 0 0);
-  --chart-3: oklch(0.6 0 0);
-  --chart-4: oklch(0.45 0 0);
-  --chart-5: oklch(0.3 0 0);
-
   --radius: 0.625rem;
 
-  --sidebar: oklch(0.11 0 0);
-  --sidebar-foreground: oklch(0.97 0 0);
-  --sidebar-primary: oklch(0.97 0 0);
-  --sidebar-primary-foreground: oklch(0.1 0 0);
-  --sidebar-accent: oklch(0.17 0 0);
-  --sidebar-accent-foreground: oklch(0.97 0 0);
-  --sidebar-border: oklch(1 0 0 / 8%);
-  --sidebar-ring: oklch(1 0 0 / 35%);
-
-  /* Brand gradient — drawn from the chain logo (blue → purple → magenta → pink).
-       Loud version is reserved for the logo + primary CTAs.
-       Soft version is for hairlines, focus rings, ambient glows, and numerals. */
+  /* Brand gradient, drawn from the chain logo (blue → purple → magenta → pink). */
   --brand-gradient: linear-gradient(
     135deg,
     #2c4dd8 0%,
@@ -127,16 +95,8 @@
     #d72f9c 75%,
     #ff2d76 100%
   );
-  --brand-gradient-soft: linear-gradient(
-    135deg,
-    rgba(44, 77, 216, 0.55) 0%,
-    rgba(126, 45, 199, 0.55) 45%,
-    rgba(197, 37, 138, 0.55) 75%,
-    rgba(233, 30, 99, 0.55) 100%
-  );
 
-  /* Brand-tinted ring colors. Used on interactive card hover/focus to keep
-       hover affordances on-brand instead of fading to grey. */
+  /* Brand-tinted ring colors for card hover/focus. */
   --ring-brand: oklch(0.6 0.18 330 / 0.45);
   --ring-brand-strong: oklch(0.6 0.18 330 / 0.7);
 }
@@ -167,6 +127,21 @@
   @apply mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8;
 }
 
+/* Grid with 1px rules between every cell at every breakpoint. The 1px gap
+   shows the grid background through; cells paint over it. */
+@utility ruled-grid {
+  display: grid;
+  gap: 1px;
+  --ruled-grid-line: color-mix(in oklab, var(--border) 70%, transparent);
+  border-block: 1px solid var(--ruled-grid-line);
+  background-color: var(--ruled-grid-line);
+  background-clip: padding-box;
+
+  & > * {
+    background-color: var(--background);
+  }
+}
+
 @utility eyebrow {
   @apply inline-flex items-center gap-2 text-xs font-semibold tracking-[0.18em] text-muted-foreground uppercase;
 }
@@ -188,14 +163,11 @@
   }
 }
 
-/* Apply the brand gradient as a background image. Used for nav indicators,
-   1px ornament rules, and any small surface that should carry brand colour. */
 @utility bg-brand-gradient {
   background-image: var(--brand-gradient);
 }
 
-/* A 1px horizontal hairline filled with the brand gradient.
-   Use as a section ornament or beneath an active nav item. */
+/* 1px brand-gradient rule. */
 @utility gradient-hairline {
   display: block;
   height: 1px;
@@ -204,8 +176,7 @@
   border-radius: 999px;
 }
 
-/* Apply the brand gradient to text. Use sparingly — numerals, single
-   ornamental words, the Premium tier eyebrow. Never on running headlines. */
+/* Brand gradient text. Numerals and small labels only, never headlines. */
 @utility gradient-text {
   background-image: var(--brand-gradient);
   -webkit-background-clip: text;
@@ -214,9 +185,8 @@
   -webkit-text-fill-color: transparent;
 }
 
-/* Choreographed hero reveal — each element fades up sequentially on first
-   paint, controlled by inline animation-delay. Skipped entirely when the
-   visitor prefers reduced motion (no animation, no hidden start state). */
+/* Hero elements fade up in sequence, staggered by --reveal-delay.
+   Skipped entirely under prefers-reduced-motion. */
 @keyframes hero-rise {
   from {
     opacity: 0;
@@ -242,27 +212,7 @@
   }
 }
 
-@keyframes hero-depth {
-  from {
-    transform: scale(1.03) translateX(0);
-  }
-  to {
-    transform: scale(1.08) translateX(-1.5%);
-  }
-}
-
-@utility hero-media {
-  transform-origin: center;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .hero-media {
-    animation: hero-depth 16s ease-in-out alternate infinite;
-  }
-}
-
-/* A 1px gradient ring overlay. Layer this on top of an element and toggle
-   opacity on hover/focus to reveal the brand colour. */
+/* 1px brand-gradient ring overlay; toggle opacity on hover/focus. */
 @utility gradient-ring {
   position: absolute;
   inset: -1px;

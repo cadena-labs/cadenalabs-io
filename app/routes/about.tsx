@@ -14,7 +14,7 @@ import { pageMeta } from "~/lib/seo";
 export const meta: MetaFunction = () => [
   ...pageMeta({
     description:
-      "Cadena Labs helps London, Ontario small businesses plan networks, harden access, and run dependable infrastructure—without enterprise overhead.",
+      "Cadena Labs helps London, Ontario small businesses plan networks, harden access, and run dependable infrastructure without enterprise overhead.",
     pathname: "/about",
     title: "About | Cadena Labs",
   }),
@@ -26,19 +26,19 @@ const values = [
     icon: Network,
     title: "Infrastructure that fits",
     description:
-      "Cadena Labs designs and tunes office WiFi, routing, and segmentation for how your team actually works—so upgrades stick and support calls quiet down.",
+      "Office WiFi, routing, and segmentation designed around how your team actually works, so upgrades stick and support calls drop off.",
   },
   {
     icon: ClipboardList,
     title: "Clear decisions, fewer surprises",
     description:
-      "You get plain-language options, trade-offs, and a roadmap—whether you are refreshing UniFi, tightening firewall rules, or planning the next site.",
+      "Plain-language options, trade-offs, and a roadmap, whether you are refreshing UniFi, tightening firewall rules, or planning the next site.",
   },
   {
     icon: ShieldCheck,
     title: "Security-minded by default",
     description:
-      "Every engagement starts from a practical baseline: identity, remote access, segmentation, and recovery—scaled to small-business reality, not buzzwords.",
+      "Every engagement starts from a practical baseline: identity, remote access, segmentation, and recovery, scaled to the size of the business.",
   },
 ];
 
@@ -107,7 +107,7 @@ export default function About() {
                 <ArrowRight />
               </CtaButton>
               <CtaButton href="/services" variant="outline">
-                View Services
+                View services
               </CtaButton>
             </div>
           </div>
@@ -118,8 +118,8 @@ export default function About() {
             <p>
               &quot;Cadena&quot; means <em>chain</em> in Spanish. It reflects
               how Cadena Labs approaches resilient systems: strong links between
-              your business and the technology it depends on—connected,
-              accountable, and built to hold up under real-world use.
+              your business and the technology it depends on, built to hold up
+              under real-world use.
             </p>
           </SectionIntro>
         </section>
@@ -129,13 +129,13 @@ export default function About() {
             eyebrow="Why Cadena Labs"
             title="How Cadena Labs works with clients"
           />
-          <div className="grid border-y border-border/70 md:grid-cols-3">
+          <div className="ruled-grid md:grid-cols-3">
             {values.map((value) => {
               const Icon = value.icon;
               return (
                 <div
                   key={value.title}
-                  className="flex flex-col gap-4 border-border/70 py-6 md:px-6 md:[&:not(:last-child)]:border-r"
+                  className="flex flex-col gap-4 py-6 md:px-6"
                 >
                   <div className="flex h-11 w-11 items-center justify-center rounded-md bg-foreground/5 text-foreground ring-1 ring-foreground/10">
                     <Icon className="h-5 w-5" aria-hidden="true" />

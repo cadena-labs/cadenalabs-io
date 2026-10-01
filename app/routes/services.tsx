@@ -1,12 +1,9 @@
 import {
   ArrowRight,
   ClipboardList,
-  Code,
   Compass,
   LifeBuoy,
   Network,
-  Server,
-  Shield,
   Wrench,
 } from "lucide-react";
 import { Link } from "react-router";
@@ -14,7 +11,7 @@ import type { MetaFunction } from "react-router";
 
 import { PageShell } from "~/components/layout";
 import { CTASection, PageHero, SectionIntro } from "~/components/site";
-import { services } from "~/data/services";
+import { serviceIcons, services } from "~/data/services";
 import { servicesCollectionSchema } from "~/lib/schemas";
 import { pageMeta } from "~/lib/seo";
 
@@ -28,14 +25,12 @@ export const meta: MetaFunction = () => [
   { "script:ld+json": servicesCollectionSchema(services.map((s) => s.name)) },
 ];
 
-const serviceIcons = [Network, Shield, Server, Code];
-
 const processSteps = [
   {
     icon: Compass,
     title: "Technical Review",
     description:
-      "Focused conversation about your current setup, constraints, and the most important technical debt to resolve.",
+      "A conversation about your current setup, constraints, and the technical debt that matters most.",
   },
   {
     icon: ClipboardList,
@@ -53,7 +48,7 @@ const processSteps = [
     icon: LifeBuoy,
     title: "Ongoing Support",
     description:
-      "Right-sized technical support. Cadena Labs stays involved as a partner for as much or as little as you need.",
+      "Cadena Labs stays involved for as much or as little ongoing support as you need.",
   },
 ];
 
@@ -68,13 +63,13 @@ export default function Services() {
         />
 
         <section className="container-page py-12">
-          <div className="grid border-y border-border/70 md:grid-cols-2 lg:grid-cols-4">
+          <div className="ruled-grid md:grid-cols-2 lg:grid-cols-4">
             {processSteps.map((step, index) => {
               const Icon = step.icon;
               return (
                 <div
                   key={step.title}
-                  className="flex min-h-56 flex-col gap-4 border-border/70 py-6 md:px-6 md:[&:not(:nth-child(2n))]:border-r lg:[&:not(:nth-child(2n))]:border-r-0 lg:[&:not(:last-child)]:border-r"
+                  className="flex flex-col gap-4 py-6 md:min-h-56 md:px-6"
                 >
                   <div className="flex items-center justify-between">
                     <div className="flex h-9 w-9 items-center justify-center rounded-md bg-foreground/5 text-foreground ring-1 ring-foreground/10">
@@ -100,8 +95,8 @@ export default function Services() {
             title="Focused support for the systems small teams rely on"
           />
           <div className="divide-y divide-border/70 border-y border-border/70">
-            {services.map((service, index) => {
-              const Icon = serviceIcons[index] ?? Network;
+            {services.map((service) => {
+              const Icon = serviceIcons[service.slug] ?? Network;
               return (
                 <Link
                   key={service.slug}

@@ -6,7 +6,7 @@ import { PageShell } from "~/components/layout";
 import { PageHero, SectionIntro } from "~/components/site";
 import { Badge } from "~/components/ui/badge";
 import { Card, CardContent } from "~/components/ui/card";
-import { posts } from "~/data/blog";
+import { formatPostDate, posts } from "~/data/blog";
 import { blogCollectionSchema } from "~/lib/schemas";
 import { pageMeta } from "~/lib/seo";
 
@@ -19,13 +19,6 @@ export const meta: MetaFunction = () => [
   }),
   { "script:ld+json": blogCollectionSchema() },
 ];
-
-const formatDate = (iso: string) =>
-  new Intl.DateTimeFormat("en-CA", {
-    month: "long",
-    day: "numeric",
-    year: "numeric",
-  }).format(new Date(`${iso}T00:00:00`));
 
 export default function Blog() {
   return (
@@ -68,7 +61,7 @@ export default function Blog() {
                         dateTime={post.date}
                         className="font-mono text-xs text-muted-foreground"
                       >
-                        {formatDate(post.date)}
+                        {formatPostDate(post.date)}
                       </time>
                       <span className="inline-flex items-center gap-1 text-sm font-medium text-foreground">
                         Read

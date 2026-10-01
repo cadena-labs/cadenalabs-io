@@ -33,7 +33,7 @@ import { pageMeta } from "~/lib/seo";
 export const meta: MetaFunction = () =>
   pageMeta({
     description:
-      "Contact Cadena Labs with a written inquiry—networking, security, servers, cloud, procurement, and small-business IT in London, Ontario.",
+      "Contact Cadena Labs about networking, security, servers, cloud, procurement, and small-business IT in London, Ontario.",
     pathname: "/contact",
     title: "Contact | Cadena Labs",
   });
@@ -68,7 +68,7 @@ export function loader({ context }: LoaderFunctionArgs) {
 export const action = handleContactAction;
 
 const bestFitItems = [
-  "5-50 person teams",
+  "5–50 person teams",
   "Single and multi-site small businesses",
   "Offices planning network, WiFi, or server upgrades",
   "Teams dealing with access, security, or reliability issues",
@@ -140,7 +140,7 @@ export default function Contact() {
         <PageHero
           eyebrow="Contact"
           title="Send an inquiry."
-          description="Best for small businesses with questions on networking, security, servers, cloud, backups, procurement, or overall infrastructure—whatever matters most right now."
+          description="Questions about networking, security, servers, cloud, backups, procurement, or anything else in your infrastructure. Start with whatever matters most right now."
         />
 
         <section className="container-page grid gap-6 pb-16 md:grid-cols-[1.4fr_1fr] md:gap-8">
@@ -177,8 +177,8 @@ export default function Contact() {
                     Describe your environment
                   </h2>
                   <p className="text-sm text-muted-foreground">
-                    Messages are reviewed on business days; Cadena Labs
-                    typically responds within one business day.
+                    A few sentences about your setup and what is going wrong is
+                    enough to start.
                   </p>
                 </div>
 
@@ -247,7 +247,7 @@ export default function Contact() {
                         className="h-11 px-5 text-sm"
                         disabled={isSubmitting}
                       >
-                        {isSubmitting ? "Sending..." : "Send Inquiry"}
+                        {isSubmitting ? "Sending…" : "Send inquiry"}
                         <Send />
                       </Button>
                       <p className="inline-flex items-center gap-1.5 text-xs text-muted-foreground">
@@ -288,23 +288,20 @@ export default function Contact() {
                   <CalendarClock className="h-3 w-3" aria-hidden="true" />
                   What to expect
                 </Eyebrow>
-                <h2 className="font-display text-2xl">
-                  One form, no public inbox
-                </h2>
+                <h2 className="font-display text-2xl">Replies come by email</h2>
                 <p className="text-sm text-muted-foreground">
-                  Inquiries stay on this page. Cadena Labs replies by email to
-                  the address you submit—there is no published contact address
-                  on the site.
+                  There is no published email address. Cadena Labs replies to
+                  the address you enter in the form.
                 </p>
                 <Separator className="bg-border/60" />
                 <ul className="space-y-2 text-sm text-muted-foreground">
                   <li className="flex items-center gap-2">
                     <Clock className="h-4 w-4 shrink-0" aria-hidden="true" />
-                    Scoped follow-up when it is a fit
+                    Reply within one business day
                   </li>
                   <li className="flex items-center gap-2">
                     <Mail className="h-4 w-4 shrink-0" aria-hidden="true" />
-                    Reply within one business day
+                    Scoped follow-up when it is a fit
                   </li>
                   <li className="flex items-center gap-2">
                     <MapPin className="h-4 w-4 shrink-0" aria-hidden="true" />
@@ -317,7 +314,7 @@ export default function Contact() {
             <Card className="ring-foreground/[0.07]">
               <CardContent className="space-y-4 px-6 py-6">
                 <Eyebrow>Best Fit</Eyebrow>
-                <h3 className="font-display text-lg">A great fit for</h3>
+                <h3 className="font-display text-lg">Typical clients</h3>
                 <ul className="space-y-2.5">
                   {bestFitItems.map((item) => (
                     <li

@@ -1,3 +1,6 @@
+import { Code, Network, Server, Shield } from "lucide-react";
+import type { LucideIcon } from "lucide-react";
+
 export type Service = {
   slug: string;
   name: string;
@@ -60,7 +63,7 @@ export const services: Service[] = [
     },
     ctaHeading: "Planning a UniFi rollout or office WiFi upgrade?",
     ctaDescription:
-      "Send an inquiry; Cadena Labs will identify the bottleneck, the risk, or the next best upgrade for your office.",
+      "Send an inquiry and Cadena Labs will identify the bottleneck, the risk, or the next best upgrade for your office.",
     ctaLabel: "Send an inquiry",
   },
   {
@@ -106,7 +109,7 @@ export const services: Service[] = [
     },
     ctaHeading: "Need a clearer picture of your network risk?",
     ctaDescription:
-      "Send an inquiry; Cadena Labs will look at your current access setup, identify the biggest exposure, and recommend the next best security step.",
+      "Send an inquiry and Cadena Labs will look at your current access setup, identify the biggest exposure, and recommend the next best security step.",
     ctaLabel: "Send an inquiry",
   },
   {
@@ -187,10 +190,18 @@ export const services: Service[] = [
     },
     ctaHeading: "Outgrowing your current website or off-the-shelf software?",
     ctaDescription:
-      "Send an inquiry; Cadena Labs will look at the system you have today and recommend the most practical next step toward custom software that fits your business.",
+      "Send an inquiry and Cadena Labs will look at the system you have today and recommend the most practical next step toward custom software that fits your business.",
     ctaLabel: "Send an inquiry",
   },
 ];
+
+// Kept out of Service so loaders can return a service as plain data.
+export const serviceIcons: Record<string, LucideIcon> = {
+  networking: Network,
+  security: Shield,
+  infrastructure: Server,
+  modernization: Code,
+};
 
 export function getService(slug: string | undefined) {
   return services.find((service) => service.slug === slug);

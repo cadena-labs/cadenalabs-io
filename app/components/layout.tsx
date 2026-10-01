@@ -81,7 +81,7 @@ export function SiteHeader() {
           className="hidden items-center gap-1 md:flex"
         >
           {navItems.map((item) => (
-            <NavLink key={item.href} to={item.href} end={false}>
+            <NavLink key={item.href} to={item.href}>
               {({ isActive }) => (
                 <span
                   className={cn(
@@ -212,8 +212,7 @@ export function SiteFooter() {
           </Link>
           <p className="text-sm text-muted-foreground leading-relaxed">
             Small-business IT, infrastructure planning, and security baselines.
-            Cadena Labs applies technical depth to your systems. Based in
-            London, Ontario.
+            Based in London, Ontario.
           </p>
         </div>
 

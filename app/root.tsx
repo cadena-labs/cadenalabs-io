@@ -61,8 +61,7 @@ export function ErrorBoundary({ error }: { error: unknown }) {
       <p className="eyebrow">Cadena Labs</p>
       <h1 className="text-4xl sm:text-6xl">{message}</h1>
       <p className="max-w-md text-muted-foreground">
-        Something on the wire didn&apos;t respond as expected. Head back to home
-        or try again in a moment.
+        Try again in a moment, or head back home.
       </p>
       <Button asChild size="lg" className="h-11 px-5 text-sm">
         <Link to="/">Return home</Link>

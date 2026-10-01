@@ -412,3 +412,11 @@ export const posts: BlogPost[] = [
 export function getPost(slug: string | undefined) {
   return posts.find((post) => post.slug === slug);
 }
+
+export function formatPostDate(iso: string) {
+  return new Intl.DateTimeFormat("en-CA", {
+    month: "long",
+    day: "numeric",
+    year: "numeric",
+  }).format(new Date(`${iso}T00:00:00`));
+}

@@ -6,7 +6,7 @@ import { PageShell } from "~/components/layout";
 import { CTASection } from "~/components/site";
 import { Badge } from "~/components/ui/badge";
 import { Separator } from "~/components/ui/separator";
-import { getPost } from "~/data/blog";
+import { formatPostDate, getPost } from "~/data/blog";
 import { blogPostingSchema } from "~/lib/schemas";
 import { pageMeta } from "~/lib/seo";
 
@@ -30,21 +30,6 @@ export const meta: MetaFunction<typeof loader> = ({ loaderData: post }) => {
 
   return post ? [...base, { "script:ld+json": blogPostingSchema(post) }] : base;
 };
-
-export function HydrateFallback() {
-  return (
-    <div className="container-page flex min-h-screen items-center justify-center text-sm text-muted-foreground">
-      Loading article...
-    </div>
-  );
-}
-
-const formatDate = (iso: string) =>
-  new Intl.DateTimeFormat("en-CA", {
-    month: "long",
-    day: "numeric",
-    year: "numeric",
-  }).format(new Date(`${iso}T00:00:00`));
 
 export default function BlogDetail() {
   const post = useLoaderData<typeof loader>();
@@ -76,7 +61,7 @@ export default function BlogDetail() {
               dateTime={post.date}
               className="block font-mono text-xs uppercase tracking-widest text-muted-foreground"
             >
-              {formatDate(post.date)}
+              {formatPostDate(post.date)}
             </time>
           </header>
 

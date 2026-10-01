@@ -1,19 +1,14 @@
-import { Heart, Church, PawPrint, Users, ArrowRight } from "lucide-react";
+import { Church, PawPrint, Users } from "lucide-react";
 import type { MetaFunction } from "react-router";
 
 import { PageShell } from "~/components/layout";
-import {
-  CTASection,
-  CtaButton,
-  PageHero,
-  SectionIntro,
-} from "~/components/site";
+import { CTASection, PageHero, SectionIntro } from "~/components/site";
 import { pageMeta } from "~/lib/seo";
 
 export const meta: MetaFunction = () =>
   pageMeta({
     description:
-      "Cadena Labs offers pro-bono IT and networking services for non-profit organizations in London, Ontario — churches, animal shelters, charities, and more.",
+      "Cadena Labs offers pro-bono IT and networking services for non-profit organizations in London, Ontario: churches, animal shelters, charities, and more.",
     pathname: "/community",
     title: "Community | Cadena Labs",
   });
@@ -46,7 +41,7 @@ export default function Community() {
         <PageHero
           eyebrow="Community"
           title="Giving Back"
-          description="Non-profits do meaningful work with limited resources. Cadena Labs offers pro-bono IT and networking services so local organizations can focus on their mission—not on technology blockers."
+          description="Non-profits do meaningful work with limited resources. Cadena Labs offers pro-bono IT and networking services so local organizations can focus on their mission instead of their technology."
         />
 
         <section className="container-page py-16 md:py-20">
@@ -54,12 +49,9 @@ export default function Community() {
             eyebrow="Eligible organizations"
             title="Organizations Cadena Labs supports"
           />
-          <div className="grid border-y border-border/70 md:grid-cols-3">
+          <div className="ruled-grid md:grid-cols-3">
             {orgTypes.map((org) => (
-              <div
-                key={org.title}
-                className="flex flex-col gap-4 border-border/70 py-8 md:px-8 md:[&:not(:last-child)]:border-r"
-              >
+              <div key={org.title} className="flex flex-col gap-4 py-8 md:px-8">
                 <div className="flex h-10 w-10 items-center justify-center rounded-md bg-foreground/5 text-foreground ring-1 ring-foreground/10">
                   <org.icon className="h-5 w-5" aria-hidden="true" />
                 </div>
@@ -90,24 +82,11 @@ export default function Community() {
           </SectionIntro>
         </section>
 
-        <section className="container-page py-16 md:py-24 text-center">
-          <div className="flex flex-col items-center gap-6">
-            <Heart className="h-12 w-12 text-brand-gradient-soft opacity-80" />
-            <h2 className="font-display text-3xl md:text-5xl">
-              Running a Non-Profit?
-            </h2>
-            <p className="max-w-xl text-muted-foreground">
-              Contact Cadena Labs with a short description of your organization.
-              The team will follow up to discuss fit, scope, and next steps.
-            </p>
-            <CtaButton href="/contact">
-              Reach Out
-              <ArrowRight />
-            </CtaButton>
-          </div>
-        </section>
-
-        <CTASection />
+        <CTASection
+          title="Running a non-profit?"
+          body="Send a short description of your organization and what you need. Cadena Labs will follow up to discuss fit, scope, and timing."
+          label="Reach out"
+        />
       </main>
     </PageShell>
   );

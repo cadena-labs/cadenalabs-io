@@ -31,14 +31,6 @@ export const meta: MetaFunction<typeof loader> = ({ loaderData: service }) => {
     : base;
 };
 
-export function HydrateFallback() {
-  return (
-    <div className="container-page flex min-h-screen items-center justify-center text-sm text-muted-foreground">
-      Loading service...
-    </div>
-  );
-}
-
 export default function ServiceDetail() {
   const service = useLoaderData<typeof loader>();
   const siblings = services.filter((item) => item.slug !== service.slug);
@@ -58,7 +50,7 @@ export default function ServiceDetail() {
                 <ArrowRight />
               </CtaButton>
               <CtaButton href="/services" variant="outline">
-                All Services
+                All services
               </CtaButton>
             </div>
           </PageHero>
@@ -91,7 +83,7 @@ export default function ServiceDetail() {
           <div className="space-y-5 border-y border-border/70 py-7">
             <div className="space-y-3">
               <Eyebrow>Best Fit</Eyebrow>
-              <h2 className="font-display text-2xl">Best fit for</h2>
+              <h2 className="font-display text-2xl">Who this is for</h2>
             </div>
             <ul className="space-y-3">
               {service.bestFor.map((item) => (

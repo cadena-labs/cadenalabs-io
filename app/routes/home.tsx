@@ -1,17 +1,10 @@
-import {
-  ArrowRight,
-  CheckCircle2,
-  Code,
-  Network,
-  Server,
-  Shield,
-} from "lucide-react";
+import { ArrowRight, CheckCircle2, Network } from "lucide-react";
 import { Link } from "react-router";
 import type { MetaFunction } from "react-router";
 
 import { PageShell } from "~/components/layout";
 import { CTASection, CtaButton, SectionIntro } from "~/components/site";
-import { services } from "~/data/services";
+import { serviceIcons, services } from "~/data/services";
 import { organizationSchema } from "~/lib/schemas";
 import { defaultSeoDescription, pageMeta } from "~/lib/seo";
 
@@ -25,27 +18,25 @@ export const meta: MetaFunction = () => [
   { "script:ld+json": organizationSchema() },
 ];
 
-const serviceIcons = [Network, Shield, Server, Code];
-
 const proofPoints = [
-  "5-50 person teams",
-  "Infrastructure planning & procurement",
+  "5–50 person teams",
   "Professional firms, clinics, and local operators",
-  "Structured technical guidance for growing businesses",
+  "Single and multi-site offices",
+  "Offices planning network, WiFi, or server upgrades",
 ];
 
 const outcomes = [
   {
     title: "Reliable Infrastructure",
-    body: "From office WiFi stabilization to server and cloud planning, Cadena Labs builds systems that stay out of the way so your team can focus.",
+    body: "Office WiFi, servers, and cloud planning, set up so they keep working and stay out of your team's way.",
   },
   {
     title: "Clear Technical Direction",
-    body: "Cadena Labs provides technical partnership—helping you make practical hardware and software decisions without enterprise bloat.",
+    body: "Practical hardware and software decisions, explained in plain language, without enterprise bloat.",
   },
   {
     title: "Security-Minded Baselines",
-    body: "Every engagement starts with a security baseline—cleaner segmentation, safer remote access, and better identity controls.",
+    body: "Every engagement starts with a security baseline: cleaner segmentation, safer remote access, and better identity controls.",
   },
 ];
 
@@ -77,9 +68,8 @@ export default function Home() {
               </p>
               <p className="hero-reveal mt-6 max-w-2xl text-lg text-muted-foreground [--reveal-delay:260ms] sm:text-xl">
                 Cadena Labs designs, deploys, and supports the systems small
-                businesses rely on. From networking and security to procurement
-                and infrastructure planning, the firm provides the technical
-                direction your team needs.
+                businesses rely on: networks, security, hardware, and
+                infrastructure planning.
               </p>
               <div className="hero-reveal mt-8 flex flex-col gap-3 sm:flex-row sm:items-center [--reveal-delay:340ms]">
                 <CtaButton href="/contact" className="h-12 px-6 text-base">
@@ -91,7 +81,7 @@ export default function Home() {
                   variant="outline"
                   className="h-12 px-6 text-base"
                 >
-                  Explore Services
+                  Explore services
                 </CtaButton>
               </div>
               <p className="hero-reveal mt-8 font-mono text-[0.7rem] font-semibold uppercase tracking-[0.22em] text-muted-foreground [--reveal-delay:440ms]">
@@ -112,11 +102,11 @@ export default function Home() {
               decisions, and keeps infrastructure secure by default.
             </p>
           </SectionIntro>
-          <div className="grid border-y border-border/70 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="ruled-grid sm:grid-cols-2 lg:grid-cols-4">
             {proofPoints.map((point) => (
               <div
                 key={point}
-                className="flex min-h-24 items-start gap-3 border-border/70 py-5 sm:px-5 sm:[&:not(:nth-child(2n))]:border-r lg:[&:not(:nth-child(2n))]:border-r-0 lg:[&:not(:last-child)]:border-r"
+                className="flex items-start gap-3 py-5 sm:min-h-24 sm:px-5"
               >
                 <CheckCircle2
                   className="mt-0.5 h-4 w-4 shrink-0 text-muted-foreground"
@@ -133,14 +123,14 @@ export default function Home() {
             eyebrow="Services"
             title="Practical infrastructure work with a security baseline"
           />
-          <div className="grid border-y border-border/70 sm:grid-cols-2 lg:grid-cols-4">
-            {services.map((service, index) => {
-              const Icon = serviceIcons[index] ?? Network;
+          <div className="ruled-grid sm:grid-cols-2 lg:grid-cols-4">
+            {services.map((service) => {
+              const Icon = serviceIcons[service.slug] ?? Network;
               return (
                 <Link
                   key={service.slug}
                   to={`/services/${service.slug}`}
-                  className="group relative flex min-h-80 flex-col gap-8 border-border/70 py-7 transition-colors focus-visible:outline-none focus-visible:ring-3 focus-visible:ring-ring/50 sm:px-7 sm:[&:not(:nth-child(2n))]:border-r lg:[&:not(:nth-child(2n))]:border-r-0 lg:[&:not(:last-child)]:border-r"
+                  className="group relative flex flex-col gap-6 py-7 transition-colors focus-visible:outline-none focus-visible:ring-3 focus-visible:ring-ring/50 sm:min-h-80 sm:gap-8 sm:px-7"
                 >
                   <span
                     aria-hidden="true"
@@ -170,7 +160,7 @@ export default function Home() {
 
         <section className="container-page py-16 md:py-20">
           <SectionIntro
-            eyebrow="Proof & Outcomes"
+            eyebrow="Outcomes"
             title="What this work looks like in practice"
           >
             <p>

@@ -9,7 +9,7 @@
 [![pnpm](https://img.shields.io/badge/maintained%20with-pnpm-cc00ff?logo=pnpm&logoColor=white)](https://pnpm.io/)
 
 Open-source marketing site for [Cadena Labs](https://cadenalabs.io) (London,
-Ontario): React Router v7, Tailwind v4, shadcn/ui, contact form (Cloudflare Email Service +
+Ontario): React Router v8, Tailwind v4, shadcn/ui, contact form (Cloudflare Email Service +
 Turnstile), deployed on Cloudflare Workers with Workers Static Assets.
 
 The code is [MIT licensed](LICENSE) so anyone can read, verify, and run their
