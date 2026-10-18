@@ -1,7 +1,6 @@
 # Cadena Labs
 
 [![Check](https://github.com/cadena-labs/cadenalabs-io/actions/workflows/check.yml/badge.svg)](https://github.com/cadena-labs/cadenalabs-io/actions/workflows/check.yml)
-[![CodeQL](https://github.com/cadena-labs/cadenalabs-io/actions/workflows/codeql.yml/badge.svg)](https://github.com/cadena-labs/cadenalabs-io/actions/workflows/codeql.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![Node](https://img.shields.io/badge/node-24-339933?logo=node.js&logoColor=white)](.node-version)
 [![Cloudflare Workers](https://img.shields.io/badge/Cloudflare-Workers-F38020?logo=cloudflare&logoColor=white)](https://developers.cloudflare.com/workers/)
