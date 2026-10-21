@@ -27,3 +27,5 @@ overrides:
   fast-uri@>=3.0.0 <3.1.7: "3.1.7"
   # fflate: GHSA-px8p-9vwx-vf98 (unzipSync infinite loop on malformed ZIP64, via satori)
   fflate@>=0.7.0 <0.7.5: "^0.7.5"
+  # source-map-js: GHSA-68fv-2mgg-jv7q (event-loop DoS via indexed source-map section offsets, via @tailwindcss/node)
+  source-map-js@>=1.0.0 <1.2.2: "^1.2.2"
