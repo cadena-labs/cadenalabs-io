@@ -30,18 +30,18 @@
     "enabled": true,
     "logs": {
       "enabled": true,
-      "invocation_logs": false,
-      // Persist so logs appear in the Cloudflare dashboard (billed separately on Paid).
+      "invocation_logs": true,
+      // Persist so logs appear in the Cloudflare dashboard (covered by the Paid plan allowance).
       "persist": true,
-      // Launch sampling for low traffic; lower if volume or cost grows.
-      "head_sampling_rate": 0.25,
+      // Full sampling; lower if volume or cost grows.
+      "head_sampling_rate": 1,
     },
     "traces": {
       "enabled": true,
-      // Persist so traces appear in the Cloudflare dashboard (billed separately on Paid).
+      // Persist so traces appear in the Cloudflare dashboard (covered by the Paid plan allowance).
       "persist": true,
-      // Launch sampling for low traffic; lower if volume or cost grows.
-      "head_sampling_rate": 0.25,
+      // Full sampling; lower if volume or cost grows.
+      "head_sampling_rate": 1,
     },
   },
 }
