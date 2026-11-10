@@ -159,6 +159,8 @@ The Environment should define:
 - `CONTACT_EMAIL` - inbox that receives contact submissions
 - `TURNSTILE_SITE_KEY`
 - `TURNSTILE_SECRET_KEY`
+- `CF_WEB_ANALYTICS_TOKEN` (optional) - Web Analytics site token; the beacon
+  only loads when this is set
 
 `EMAIL_FROM_ADDRESS` must use a domain onboarded to Cloudflare Email Sending
 in the same account as the Worker. These values are Worker runtime secrets only;

@@ -6,10 +6,16 @@ export const runtimeSecretNames = [
   "TURNSTILE_SECRET_KEY",
 ];
 
+// Uploaded when present; the site works without them.
+export const optionalRuntimeSecretNames = ["CF_WEB_ANALYTICS_TOKEN"];
+
 export function collectRuntimeSecrets(env = process.env) {
-  return Object.fromEntries(
-    runtimeSecretNames.map((name) => [name, getRequiredEnv(env, name)]),
-  );
+  return Object.fromEntries([
+    ...runtimeSecretNames.map((name) => [name, getRequiredEnv(env, name)]),
+    ...optionalRuntimeSecretNames
+      .filter((name) => env[name])
+      .map((name) => [name, env[name]]),
+  ]);
 }
 
 function getRequiredEnv(env, name) {

@@ -64,6 +64,8 @@ Copy `.dev.vars.example` to `.dev.vars` and set:
 
 - `EMAIL_FROM_ADDRESS`, `EMAIL_FROM_NAME`, `CONTACT_EMAIL`
 - `TURNSTILE_SITE_KEY`, `TURNSTILE_SECRET_KEY`
+- `CF_WEB_ANALYTICS_TOKEN` (optional) — token from your own Cloudflare Web
+  Analytics site (manual JS snippet setup). Leave it unset to skip analytics.
 
 `EMAIL_FROM_ADDRESS` must use a domain onboarded to Cloudflare Email Sending
 in the Worker's account. Review the generated sending DNS records while

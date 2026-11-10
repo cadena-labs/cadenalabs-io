@@ -6,11 +6,13 @@ import {
   Outlet,
   Scripts,
   ScrollRestoration,
+  useRouteLoaderData,
 } from "react-router";
-import type { LinksFunction } from "react-router";
+import type { LinksFunction, LoaderFunctionArgs } from "react-router";
 import type * as React from "react";
 
 import { Button } from "~/components/ui/button";
+import { cloudflareContext } from "~/lib/cloudflare-context";
 
 import styles from "./app.css?url";
 
@@ -29,7 +31,18 @@ export const links: LinksFunction = () => [
   },
 ];
 
+export function loader({ context }: LoaderFunctionArgs) {
+  return {
+    // Optional: forks without their own Web Analytics site load no beacon.
+    webAnalyticsToken:
+      context.get(cloudflareContext).env.CF_WEB_ANALYTICS_TOKEN || null,
+  };
+}
+
 export function Layout({ children }: { children: React.ReactNode }) {
+  const webAnalyticsToken =
+    useRouteLoaderData<typeof loader>("root")?.webAnalyticsToken;
+
   return (
     <html lang="en" className="dark">
       <head>
@@ -42,6 +55,13 @@ export function Layout({ children }: { children: React.ReactNode }) {
         {children}
         <ScrollRestoration />
         <Scripts />
+        {webAnalyticsToken ? (
+          <script
+            type="module"
+            src="https://static.cloudflareinsights.com/beacon.min.js"
+            data-cf-beacon={JSON.stringify({ token: webAnalyticsToken })}
+          />
+        ) : null}
       </body>
     </html>
   );
