@@ -4,10 +4,7 @@ import { spawnSync } from "node:child_process";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
-import {
-  collectRuntimeSecrets,
-  runtimeSecretNames,
-} from "./runtime-secrets.mjs";
+import { collectRuntimeSecrets } from "./runtime-secrets.mjs";
 
 const scriptDir = path.dirname(fileURLToPath(import.meta.url));
 const projectRoot = path.resolve(scriptDir, "..");
@@ -22,13 +19,13 @@ const secrets = collectRuntimeSecrets();
 
 if (dryRun) {
   console.log(
-    `Validated Cloudflare secret sync inputs: ${runtimeSecretNames.join(", ")}`,
+    `Validated Cloudflare secret sync inputs: ${Object.keys(secrets).join(", ")}`,
   );
   process.exit(0);
 }
 
 console.log(
-  `Syncing Cloudflare Worker secrets from 1Password Environment: ${runtimeSecretNames.join(", ")}`,
+  `Syncing Cloudflare Worker secrets from 1Password Environment: ${Object.keys(secrets).join(", ")}`,
 );
 
 const result = spawnSync(

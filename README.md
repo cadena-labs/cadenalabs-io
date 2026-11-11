@@ -159,6 +159,12 @@ The Environment should define:
 - `CONTACT_EMAIL` - inbox that receives contact submissions
 - `TURNSTILE_SITE_KEY`
 - `TURNSTILE_SECRET_KEY`
+- `CF_WEB_ANALYTICS_TOKEN` (optional) - Web Analytics site token; the beacon
+  only loads when this is set. Deployed Workers only: local dev and preview
+  load just the secrets listed in `secrets.required`, so the beacon never
+  renders locally. Deploys add or update it but never remove it; to turn
+  analytics off, run
+  `pnpm exec wrangler secret delete CF_WEB_ANALYTICS_TOKEN --config wrangler.jsonc`.
 
 `EMAIL_FROM_ADDRESS` must use a domain onboarded to Cloudflare Email Sending
 in the same account as the Worker. These values are Worker runtime secrets only;

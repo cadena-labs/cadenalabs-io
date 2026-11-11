@@ -64,6 +64,11 @@ Copy `.dev.vars.example` to `.dev.vars` and set:
 
 - `EMAIL_FROM_ADDRESS`, `EMAIL_FROM_NAME`, `CONTACT_EMAIL`
 - `TURNSTILE_SITE_KEY`, `TURNSTILE_SECRET_KEY`
+- `CF_WEB_ANALYTICS_TOKEN` (optional) — token from your own Cloudflare Web
+  Analytics site (manual JS snippet setup). Leave it unset to skip analytics.
+  Set it as a Worker secret, not in `.dev.vars`: local dev only loads the
+  secrets listed in `secrets.required`, so the beacon only renders once
+  deployed. Removing it later takes `wrangler secret delete`.
 
 `EMAIL_FROM_ADDRESS` must use a domain onboarded to Cloudflare Email Sending
 in the Worker's account. Review the generated sending DNS records while
