@@ -5,5 +5,3 @@ EMAIL_FROM_NAME="Cadena Labs"
 CONTACT_EMAIL=""
 TURNSTILE_SITE_KEY=""
 TURNSTILE_SECRET_KEY=""
-# Optional: Cloudflare Web Analytics site token. Leave empty to skip the beacon.
-CF_WEB_ANALYTICS_TOKEN=""
